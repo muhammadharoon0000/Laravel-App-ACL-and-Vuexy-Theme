@@ -19,18 +19,18 @@ class AuthController extends Controller
         $validated = $req->validate([
             'name' => 'required|max:255',
             'email' => 'required|email|unique:users',
-            'password' => 'required|confirmed'
+            'password' => 'min:3|required_with:confirm_password | same:confirm_password',
+            'confirm_password' => 'min:3'
         ]);
 
         $register_user = new User;
+        $register_user->user_role_id = 2;
         $register_user->name = $req->name;
         $register_user->email = $req->email;
-        $register_user->user_id = 2;
         $register_user->password = Hash::make($req->password);
         $register_user->save();
 
-        // $token = $register_user->createToken('API Token')->accessToken;
-        // return response(['user' => $register_user, 'token' => $token]);
+        return redirect()->to(url('/login'));
     }
     public function loginForm()
     {
@@ -43,7 +43,10 @@ class AuthController extends Controller
             'password' => ['required'],
         ]);
         Auth::attempt($credentials);
-        return redirect()->to(url('/'));
+        if (Auth::check() && Auth::user()->user_role['name'] === 'ADMIN') {
+            return redirect()->to(url('/dashboard'));
+        }
+        return redirect()->to(url('/home'));
     }
 
     public function logout()

@@ -1,6 +1,7 @@
 @extends('layouts.master')
 @section('content')
-    <div class="app-content content">
+    <h1>Home Page</h1>
+    {{-- <div class="app-content content">
 
         <div class="content-overlay"></div>
         <div class="header-navbar-shadow"></div>
@@ -552,5 +553,5 @@
 
             </div>
         </div>
-    </div>
+    </div> --}}
 @endsection

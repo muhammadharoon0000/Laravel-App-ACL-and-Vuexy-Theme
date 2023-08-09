@@ -18,7 +18,10 @@ use OTIFSolutions\ACLMenu\Models\MenuItem;
 */
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/', function () {
+    Route::get('/home', function () {
+        return view('home');
+    });
+    Route::get('/dashboard', function () {
         return view('home');
     });
     Route::get('/to_do', function () {

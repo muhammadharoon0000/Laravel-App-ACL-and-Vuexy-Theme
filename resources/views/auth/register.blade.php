@@ -1,3 +1,4 @@
+@include('partials.errors')
 <!DOCTYPE html>
 <html class="loading" lang="en" data-textdirection="ltr">
 
@@ -44,26 +45,27 @@
                                         <p class="px-2">Fill the below form to create a new account.</p>
                                         <div class="card-content">
                                             <div class="card-body pt-0">
-                                                <form action="index.html">
+                                                <form method="POST" action="{{ url('/register') }}">
+                                                    @csrf
                                                     <div class="form-label-group">
-                                                        <input type="text" id="inputName" class="form-control"
-                                                            placeholder="Name" required>
+                                                        <input name="name" type="text" id="inputName"
+                                                            class="form-control" placeholder="Name" required>
                                                         <label for="inputName">Name</label>
                                                     </div>
                                                     <div class="form-label-group">
-                                                        <input type="email" id="inputEmail" class="form-control"
-                                                            placeholder="Email" required>
+                                                        <input name="email" type="email" id="inputEmail"
+                                                            class="form-control" placeholder="Email" required>
                                                         <label for="inputEmail">Email</label>
                                                     </div>
                                                     <div class="form-label-group">
-                                                        <input type="password" id="inputPassword" class="form-control"
-                                                            placeholder="Password" required>
+                                                        <input name="password" type="password" id="inputPassword"
+                                                            class="form-control" placeholder="Password" required>
                                                         <label for="inputPassword">Password</label>
                                                     </div>
                                                     <div class="form-label-group">
-                                                        <input type="password" id="inputConfPassword"
-                                                            class="form-control" placeholder="Confirm Password"
-                                                            required>
+                                                        <input name="confirm_password" type="password"
+                                                            id="inputConfPassword" class="form-control"
+                                                            placeholder="Confirm Password" required>
                                                         <label for="inputConfPassword">Confirm Password</label>
                                                     </div>
                                                     <div class="form-group row">
@@ -82,7 +84,7 @@
                                                             </fieldset>
                                                         </div>
                                                     </div>
-                                                    <a href="auth-login.html"
+                                                    <a href="{{ url('/login') }}"
                                                         class="btn btn-outline-primary float-left btn-inline mb-50">Login</a>
                                                     <button type="submit"
                                                         class="btn btn-primary float-right btn-inline mb-50">Register</a>

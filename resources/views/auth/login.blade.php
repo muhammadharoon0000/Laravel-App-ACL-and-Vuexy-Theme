@@ -1,13 +1,4 @@
-@if ($errors->any())
-    @foreach ($errors->all() as $error)
-        <div class="alert alert-warning alert-dismissible fade show" role="alert">
-            <div>{{ $error }}</div>
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    @endforeach
-@endif
+@include('partials.errors')
 <!DOCTYPE html>
 <html class="loading" lang="en" data-textdirection="ltr">
 
@@ -93,7 +84,7 @@
                                                         <div class="text-right"><a href="auth-forgot-password.html"
                                                                 class="card-link">Forgot Password?</a></div>
                                                     </div>
-                                                    <a href="auth-register.html"
+                                                    <a href="{{ url('/register') }}"
                                                         class="btn btn-outline-primary float-left btn-inline">Register</a>
                                                     <button type="submit"
                                                         class="btn btn-primary float-right btn-inline">Login</button>
