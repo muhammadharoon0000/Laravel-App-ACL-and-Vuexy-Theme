@@ -23,10 +23,10 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/core/menu/menu-types/vertical-menu.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/core/colors/palette-gradient.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/pages/dashboard-analytics.css') }}">
-<link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/pages/card-analytics.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/pcss/style.cages/card-analytics.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/plugins/tour/tour.css') }}">
 <!-- END: Page CSS-->
 
 <!-- BEGIN: Custom CSS-->
-<link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/style.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('app-assets/ss') }}">
 <!-- END: Custom CSS-->

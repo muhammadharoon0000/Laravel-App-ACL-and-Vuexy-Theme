@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\UsersAuthController;
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 use OTIFSolutions\ACLMenu\Models\MenuItem;
 
@@ -20,11 +20,11 @@ Route::get('/', function () {
 });
 
 
-Route::get('/login', [UsersAuthController::class, 'loginForm']);
-Route::post('/login', [UsersAuthController::class, 'login']);
+Route::get('/login', [AuthController::class, 'loginForm']);
+Route::post('/login', [AuthController::class, 'login']);
 
-Route::get('/register', [UsersAuthController::class, 'registrationForm']);
-Route::post('/register', [UsersAuthController::class, 'register']);
+Route::get('/register', [AuthController::class, 'registrationForm']);
+Route::post('/register', [AuthController::class, 'register']);
 
 
 
