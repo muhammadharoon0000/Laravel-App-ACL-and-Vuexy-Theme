@@ -10,7 +10,7 @@
     <meta name="keywords"
         content="admin template, Vuexy admin template, dashboard template, flat admin template, responsive admin template, web app">
     <meta name="author" content="PIXINVENT">
-    <title>Dashboard analytics - Vuexy - Bootstrap HTML admin template</title>
+    <title>Login</title>
 
     @include('partials.styles')
 
@@ -44,11 +44,11 @@
                                         <p class="px-2">Welcome back, please login to your account.</p>
                                         <div class="card-content">
                                             <div class="card-body pt-1">
-                                                <form action="index.html">
+                                                <form action="/login">
                                                     <fieldset
                                                         class="form-label-group form-group position-relative has-icon-left">
-                                                        <input type="text" class="form-control" id="user-name"
-                                                            placeholder="Username" required>
+                                                        <input name="name" type="text" class="form-control"
+                                                            id="user-name" placeholder="Username" required>
                                                         <div class="form-control-position">
                                                             <i class="feather icon-user"></i>
                                                         </div>
@@ -56,8 +56,8 @@
                                                     </fieldset>
 
                                                     <fieldset class="form-label-group position-relative has-icon-left">
-                                                        <input type="password" class="form-control" id="user-password"
-                                                            placeholder="Password" required>
+                                                        <input name="password" type="password" class="form-control"
+                                                            id="user-password" placeholder="Password" required>
                                                         <div class="form-control-position">
                                                             <i class="feather icon-lock"></i>
                                                         </div>
