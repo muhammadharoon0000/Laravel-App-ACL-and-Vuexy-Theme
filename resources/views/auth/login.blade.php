@@ -1,3 +1,13 @@
+@if ($errors->any())
+    @foreach ($errors->all() as $error)
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <div>{{ $error }}</div>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endforeach
+@endif
 <!DOCTYPE html>
 <html class="loading" lang="en" data-textdirection="ltr">
 
@@ -20,6 +30,7 @@
     class="vertical-layout vertical-menu-modern 1-column  navbar-floating footer-static bg-full-screen-image  blank-page blank-page"
     data-open="click" data-menu="vertical-menu-modern" data-col="1-column">
     <!-- BEGIN: Content-->
+
     <div class="app-content content">
         <div class="content-overlay"></div>
         <div class="header-navbar-shadow"></div>
@@ -44,15 +55,16 @@
                                         <p class="px-2">Welcome back, please login to your account.</p>
                                         <div class="card-content">
                                             <div class="card-body pt-1">
-                                                <form action="/login">
+                                                <form method="POST" action="{{ url('/login') }}">
+                                                    @csrf
                                                     <fieldset
                                                         class="form-label-group form-group position-relative has-icon-left">
-                                                        <input name="name" type="text" class="form-control"
-                                                            id="user-name" placeholder="Username" required>
+                                                        <input name="email" type="text" class="form-control"
+                                                            id="user-name" placeholder="email" required>
                                                         <div class="form-control-position">
                                                             <i class="feather icon-user"></i>
                                                         </div>
-                                                        <label for="user-name">Username</label>
+                                                        <label for="user-name">Email</label>
                                                     </fieldset>
 
                                                     <fieldset class="form-label-group position-relative has-icon-left">

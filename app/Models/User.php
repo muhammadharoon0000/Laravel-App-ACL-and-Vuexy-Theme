@@ -10,7 +10,7 @@ use OTIFSolutions\ACLMenu\Traits\ACLUserTrait;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, ACLUserTrait;
 
     /**
      * The attributes that are mass assignable.

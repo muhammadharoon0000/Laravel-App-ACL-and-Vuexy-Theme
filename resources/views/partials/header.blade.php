@@ -297,8 +297,8 @@
                                 Inbox</a><a class="dropdown-item" href="app-todo.html"><i
                                     class="feather icon-check-square"></i> Task</a><a class="dropdown-item"
                                 href="app-chat.html"><i class="feather icon-message-square"></i> Chats</a>
-                            <div class="dropdown-divider"></div><a class="dropdown-item" href="auth-login.html"><i
-                                    class="feather icon-power"></i> Logout</a>
+                            <div class="dropdown-divider"></div><a class="dropdown-item"
+                                href="{{ url('/logout') }}"><i class="feather icon-power"></i> Logout</a>
                         </div>
                     </li>
                 </ul>
