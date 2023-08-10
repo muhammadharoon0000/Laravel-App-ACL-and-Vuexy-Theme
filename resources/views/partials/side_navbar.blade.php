@@ -14,7 +14,7 @@
     <div class="shadow-bottom"></div>
     <div class="main-menu-content">
         <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-            {{-- @if (Auth::user()->user_role) --}}
+
             @if (Auth::user()['user_role'])
                 @foreach (Auth::user()
         ['user_role']->menu_items()->orderBy('order_number', 'ASC')->get() as $menuItem)

@@ -5,6 +5,7 @@ use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use OTIFSolutions\ACLMenu\Models\MenuItem;
+use OTIFSolutions\ACLMenu\Models\UserRole;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,8 +43,8 @@ Route::get('/logout', [AuthController::class, 'logout']);
 
 
 Route::get('/test', function () {
-    $user = Auth::user();
-    return $user->user_role;
+    // $user = Auth::user();
+    // return $user->user_role;
     // dd($user->user_role->name, $user['user_role']['name']);
 
 });

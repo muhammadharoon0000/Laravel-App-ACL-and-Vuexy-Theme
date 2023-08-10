@@ -10,8 +10,9 @@
     <meta name="keywords"
         content="admin template, Vuexy admin template, dashboard template, flat admin template, responsive admin template, web app">
     <meta name="author" content="PIXINVENT">
-    <title>Dashboard analytics - Vuexy - Bootstrap HTML admin template</title>
+    <title>Dashboard</title>
     @include('partials.styles')
+    @stack('style')
 
 </head>
 
@@ -25,6 +26,7 @@
 
     @include('partials.footer')
     @include('partials.scripts')
+    @stack('script')
 </body>
 
 </html>

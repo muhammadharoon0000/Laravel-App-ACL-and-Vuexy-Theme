@@ -11,7 +11,9 @@ class MenuItemsTableSeeder extends Seeder
 
     public function run()
     {
-        $id = UserRole::Where(['name' => 'ADMIN'])->get('id');
+        $user_role_id = UserRole::Where(['name' => 'ADMIN'])->get('id');
+        $customer_role_id = UserRole::Where(['name' => 'CUSTOMER'])->get('id');
+
         MenuItem::updateOrCreate(
             ['id' => 1],
             [
@@ -24,6 +26,32 @@ class MenuItemsTableSeeder extends Seeder
             ]
         )
             ->user_roles()
-            ->sync($id);
+            ->sync($user_role_id);
+        MenuItem::updateOrCreate(
+            ['id' => 2],
+            [
+                'order_number' => 2,
+                'parent_id' => 0,
+                'icon' => 'feather icon-check-square',
+                'name' => 'To-Do',
+                'route' => '/to_do',
+                'generate_permission' => 'ALL'
+            ]
+        )
+            ->user_roles()
+            ->sync($user_role_id);
+        MenuItem::updateOrCreate(
+            ['id' => 3],
+            [
+                'order_number' => 3,
+                'parent_id' => 0,
+                'icon' => 'feather icon-user',
+                'name' => 'Team',
+                'route' => '/team',
+                'generate_permission' => 'ALL'
+            ]
+        )
+            ->user_roles()
+            ->sync([$user_role_id, $customer_role_id]);
     }
 }

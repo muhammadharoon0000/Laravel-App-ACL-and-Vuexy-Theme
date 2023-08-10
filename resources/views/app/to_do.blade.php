@@ -1,4 +1,10 @@
 @extends('layouts.master')
+
+@push('style')
+    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/pages/app-todo.css') }}">
+@endpush
+
+
 @section('content')
     <div class="app-content content">
         <div class="content-overlay"></div>
@@ -570,3 +576,8 @@
         </div>
     </div>
 @endsection
+
+
+@push('script')
+    <script src="{{ asset('app-assets/js/scripts/pages/app-todo.js') }}"></script>
+@endpush

@@ -1,4 +1,5 @@
 @include('partials.errors')
+
 <!DOCTYPE html>
 <html class="loading" lang="en" data-textdirection="ltr">
 
@@ -13,7 +14,9 @@
     <meta name="author" content="PIXINVENT">
     <title>Login</title>
 
+
     @include('partials.styles')
+    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/pages/authentication.css') }}">
 
 </head>
 
