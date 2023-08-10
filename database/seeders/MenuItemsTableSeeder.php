@@ -11,22 +11,21 @@ class MenuItemsTableSeeder extends Seeder
 
     public function run()
     {
-        $user_role_id = UserRole::Where(['name' => 'ADMIN'])->get('id');
-        $customer_role_id = UserRole::Where(['name' => 'CUSTOMER'])->get('id');
-
+        $roleNames = ['ADMIN', 'CUSTOMER'];
+        $roles = UserRole::whereIn('name', $roleNames)->pluck("id");
         MenuItem::updateOrCreate(
             ['id' => 1],
             [
                 'order_number' => 1,
                 'parent_id' => 0,
                 'icon' => 'feather icon-home',
-                'name' => 'dashboard',
+                'name' => 'Dashboard',
                 'route' => '/dashboard',
                 'generate_permission' => 'ALL'
             ]
         )
             ->user_roles()
-            ->sync($user_role_id);
+            ->sync($roles[0]);
         MenuItem::updateOrCreate(
             ['id' => 2],
             [
@@ -39,7 +38,7 @@ class MenuItemsTableSeeder extends Seeder
             ]
         )
             ->user_roles()
-            ->sync($user_role_id);
+            ->sync($roles[1]);
         MenuItem::updateOrCreate(
             ['id' => 3],
             [
@@ -52,6 +51,6 @@ class MenuItemsTableSeeder extends Seeder
             ]
         )
             ->user_roles()
-            ->sync([$user_role_id, $customer_role_id]);
+            ->sync([$roles[0], $roles[1]]);
     }
 }

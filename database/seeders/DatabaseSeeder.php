@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Database\Seeders\UserRolesTableSeeder;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Artisan;
 

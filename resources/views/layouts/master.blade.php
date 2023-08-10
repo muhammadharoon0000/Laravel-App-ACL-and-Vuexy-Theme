@@ -21,8 +21,18 @@
 
     @include('partials.header')
     @include('partials.side_navbar')
+    <div class="app-content content">
+        <div class="content-overlay"></div>
+        <div class="header-navbar-shadow"></div>
+        <div class="content-wrapper">
+            <div class="content-header row">
+            </div>
+            <div class="content-body">
+                @yield('content')
+            </div>
+        </div>
+    </div>
 
-    @yield('content')
 
     @include('partials.footer')
     @include('partials.scripts')
