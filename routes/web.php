@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\app\TeamController;
 use App\Http\Controllers\AuthController;
+use App\Models\User;
 use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -32,12 +33,19 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/team', function () {
         return view('app.team');
     });
-    Route::post('/storeUserRole', [TeamController::class, 'storeUserRole']);
-    Route::get('/getUserRole', [TeamController::class, 'getUserRole']);
-    Route::post('/addUser', [TeamController::class, 'addUser']);
+    Route::post('/store_user_role', [TeamController::class, 'storeUserRole']);
+    Route::get('/get_user_role', [TeamController::class, 'getUserRole']);
+
+    Route::post('/add_user', [TeamController::class, 'addUser']);
+    Route::get('/edit_user_form/{id}', [TeamController::class, 'editUserForm']);
+
+    Route::get('/get_permissions', [TeamController::class, 'getPermissions']);
+    Route::get('/get_all_users', [TeamController::class, 'getAllUsers']);
+    Route::get('/delete_user/{id}', [TeamController::class, 'deleteUser']);
+    Route::get('/delete_user_role/{id}', [TeamController::class, 'deleteUserRole']);
+    Route::get('/get_all_user_roles', [TeamController::class, 'getAllUserRoles']);
+    // Route::post('/edit_user/{id}', [TeamController::class, 'editUser']);
 });
-
-
 
 
 Route::get('/login', [AuthController::class, 'loginForm'])->name('login');
@@ -56,4 +64,8 @@ Route::get('/test', function () {
     // $roleNames = ['ADMIN', 'CUSTOMER'];
     // $roles = UserRole::whereIn('name', $roleNames)->pluck("id");
     // return $roles[0];
+    // return Auth::user()->user_role->permissions()->pluck("name", "id");
+
+
+
 });
