@@ -3,7 +3,7 @@
         <div class="col-12">
             <div class="">
                 <div class="">
-                    <h4 class="card-title">Add/Update User</h4>
+                    <h4 class="card-title">Add User</h4>
                 </div>
                 <div class="card-content">
                     <div class="card-body">
@@ -15,14 +15,14 @@
                                         <div class="form-group">
                                             <label for="first-name-vertical"> Name</label>
                                             <input type="text" id="name" class="form-control" name="fname"
-                                                placeholder="First Name" value="{{ $user ? $user['name'] : '' }}">
+                                                placeholder="First Name">
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="form-group">
                                             <label for="email-id-vertical">Email</label>
                                             <input type="email" id="email" class="form-control" name="email-id"
-                                                placeholder="Email" value="{{ $user ? $user['email'] : '' }}">
+                                                placeholder="Email">
                                         </div>
                                     </div>
                                     <div class="col-12">
@@ -46,8 +46,7 @@
                                         <fieldset class="form-group">
                                             <select class="form-control" id="selected_role" name="user_role">
                                                 @foreach ($user_roles as $id => $user_role)
-                                                    <option value="{{ $id }}"
-                                                        {{ $user['user_role_id'] == $id ? selected : '' }}>
+                                                    <option value="{{ $id }}">
                                                         {{ $user_role }}
                                                     </option>
                                                 @endforeach

@@ -17,10 +17,12 @@ console.log("Custom JS");
 // });
 
 
-
-
 $("#add_role_btn").on("click", function () {
-    $("#add_role_modal").modal('toggle');
+
+    let add_user_role_modal = $("#add_user_role_modal").html();
+    $("#main_modal_body").append(add_user_role_modal);
+    $("#main_modal").modal('toggle');
+
     $("#add_role").on("click", function (e) {
         e.preventDefault();
         let values = { name: $("#add_role_name").val(), _token: $('meta[name="csrf-token"]').attr('content') }
@@ -46,6 +48,7 @@ $("#add_user_btn").on("click", function () {
             $("#main_modal").modal('toggle');
         }
     })
+    $("#main_modal_body").html("");
 });
 
 
@@ -102,7 +105,7 @@ function updateUserList() {
         ]
     });
 }
-// onclick="editUser(${data.id})"
+
 function updateUserRolesList() {
     $('#myTable2').dataTable({
         ajax: 'http://localhost/get_all_user_roles',
@@ -111,7 +114,7 @@ function updateUserRolesList() {
             {
                 "data": null,
                 "mRender": function (data) {
-                    return `<button class="btn btn-primary m-1"  onclick="deleteUserRole(${data.id})">Delete</button><button class="btn btn-success m-1"  onclick="editUser(${data.id})">Edit</button>`;
+                    return `<button class="btn btn-primary m-1"  onclick="deleteUserRole(${data.id})">Delete</button><button class="btn btn-success m-1"  onclick="editUserRole(${data.id})">Edit</button>`;
                 }
             }
         ]

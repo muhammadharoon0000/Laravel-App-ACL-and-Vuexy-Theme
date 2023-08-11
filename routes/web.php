@@ -22,10 +22,10 @@ use OTIFSolutions\ACLMenu\Models\UserRole;
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/home', function () {
-        return view('home');
+        return view('layouts.home');
     });
     Route::get('/dashboard', function () {
-        return view('home');
+        return view('layouts.home');
     });
     Route::get('/to_do', function () {
         return view('app.to_do');
@@ -36,14 +36,21 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/store_user_role', [TeamController::class, 'storeUserRole']);
     Route::get('/get_user_role', [TeamController::class, 'getUserRole']);
 
+    Route::get('/get_user_role_modal', [TeamController::class, 'getUserRoleModal']);
+
+    Route::get('/add_user_modal', [TeamController::class, 'addUserModal']);
     Route::post('/add_user', [TeamController::class, 'addUser']);
+
     Route::get('/edit_user_form/{id}', [TeamController::class, 'editUserForm']);
 
     Route::get('/get_permissions', [TeamController::class, 'getPermissions']);
+
     Route::get('/get_all_users', [TeamController::class, 'getAllUsers']);
     Route::get('/delete_user/{id}', [TeamController::class, 'deleteUser']);
     Route::get('/delete_user_role/{id}', [TeamController::class, 'deleteUserRole']);
     Route::get('/get_all_user_roles', [TeamController::class, 'getAllUserRoles']);
+
+
     // Route::post('/edit_user/{id}', [TeamController::class, 'editUser']);
 });
 

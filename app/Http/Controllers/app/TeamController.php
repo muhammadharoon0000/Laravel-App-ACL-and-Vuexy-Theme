@@ -12,27 +12,35 @@ use OTIFSolutions\ACLMenu\Models\UserRole;
 
 class TeamController extends Controller
 {
+    public function getUserRoleModal()
+    {
+        return view('partials.add_user_role_modal');
+    }
     public function storeUserRole(Request $req)
     {
-        $user_role = new UserRole;
-        $user_role->name = strtoupper($req['name']);
-        $user_role->save();
-        return response()->json("Successfully Added");
+        // $user_role = new UserRole;
+        // $user_role->name = strtoupper($req['name']);
+        // $user_role->save();
+        // return response()->json("Successfully Added");
+        return response()->json([
+            "message" => "Success Message",
+            "location" => "/team"
+        ]);
+    }
+    public function deleteUserRole($id)
+    {
+        $user_role = UserRole::find($id);
+        $user_role->delete();
+        return response()->json([
+            'message' => 'Success',
+            "location" => "/team"
+        ]);
     }
 
     public function getUserRole()
     {
         $user_roles = UserRole::pluck("name", "id");
-        $returnHTML = view('partials.add_user_modal')->with('user_roles', $user_roles)->render();
-        return response()->json(array('success' => true, 'html' => $returnHTML));
-    }
-    public function editUserForm($id)
-    {
-        $user = User::find($id)->pluck("email", "name", "user_role_id");
-        $user_roles = UserRole::pluck("name", "id");
-        $returnHTML = view('partials.add_user_modal')->with("user", $user)->with("user_roles", $user_roles);
-        // ->render();
-        // return response()->json(array('success' => true, 'html' => $returnHTML));
+        return view('partials.add_user_modal')->with('user_roles', $user_roles);
     }
     public function addUser(Request $req, $id = null)
     {
@@ -51,6 +59,20 @@ class TeamController extends Controller
         $user->save();
         return response()->json("User Added/updated Successfully");
     }
+    public function editUserForm($id)
+    {
+        $user = User::find($id)->pluck("email", "name", "user_role_id");
+        $user_roles = UserRole::pluck("name", "id");
+        return view('partials.add_user_modal')->with("user", $user)->with("user_roles", $user_roles);
+    }
+    public function deleteUser($id)
+    {
+        $user = User::find($id);
+        $user->delete();
+        return response()->json("user deleted");
+    }
+
+
 
     public function getAllUsers()
     {
@@ -60,23 +82,9 @@ class TeamController extends Controller
     public function getPermissions()
     {
         $permissions = Auth::user()->user_role->permissions()->pluck("name", "id");
-        $returnHTML = view('partials.assign_permissions_modal')->with('permissions', $permissions)->render();
-        return response()->json(array('success' => true, 'html' => $returnHTML));
+        return view('partials.assign_permissions_modal')->with('permissions', $permissions);
     }
 
-    public function deleteUser($id)
-    {
-        $user = User::find($id);
-        $user->delete();
-        return response()->json("user deleted");
-    }
-
-    public function deleteUserRole($id)
-    {
-        $user_role = UserRole::find($id);
-        $user_role->delete();
-        return response()->json("user role deleted");
-    }
     public function getAllUserRoles()
     {
         $user_roles = UserRole::get();
