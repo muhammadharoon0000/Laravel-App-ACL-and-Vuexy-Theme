@@ -10,7 +10,7 @@ function updateUserList() {
             {
                 "data": null,
                 "mRender": function (data) {
-                    return `<button class="btn btn-primary m-1" onclick="deleteUser(${data.id})">Delete</button><button class="btn btn-success m-1"><a href="http://localhost/edit_user_form/${data.id}">Edit</a></button>`;
+                    return `<button class="btn btn-primary m-1" onclick="deleteUser(${data.id})">Delete</button><button class="btn btn-success m-1" data-toggle="modal-feed" data-target="#modal_md" data-feed="http://localhost/edit_user_modal/${data.id}">Edit</button>`;
                 }
             }
         ]

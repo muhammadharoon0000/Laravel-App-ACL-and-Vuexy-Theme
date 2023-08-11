@@ -49,45 +49,60 @@ class TeamController extends Controller
             "location" => "/team"
         ]);
     }
-
-
-
     public function getUserRole()
     {
         $user_roles = UserRole::pluck("name", "id");
-        return view('partials.add_user_modal')->with('user_roles', $user_roles);
-    }
-    public function addUser(Request $req, $id = null)
-    {
-        $validated = $req->validate([
-            'name' => 'required|max:255',
-            'email' => 'required|email|unique:users',
-            'password' => 'min:3|required_with:confirm_password | same:confirm_password',
-            'confirm_password' => 'min:3'
+        return view('partials.add_user_modal')->with([
+            "title" => "Add User",
+            "user_roles" => $user_roles
         ]);
+    }
+    public function editUserModal($id)
+    {
+        $user = User::find($id);
+        $user_roles = UserRole::pluck("name", "id");
+        return view('partials.add_user_modal')->with([
+            "title" => "Update User",
+            "user" => $user,
+            "user_roles" => $user_roles
+        ]);
+    }
+    public function storeOrUpdateUser(Request $req, $id = null)
+    {
 
-        $user = new User;
+        $user = $id ? User::find($id) : new User;
+        if (!$req->password) {
+            unset($req['password']);
+            unset($req['confirm_password']);
+        }
+        $validated = $req->validate([
+            'name' => 'required | max:255',
+            'email' => 'required|email|unique:users,email,' . $user->id,
+            'user_role' => 'required',
+            'password' => 'sometimes | min:6 | required_with:confirm_password | same:confirm_password',
+            'confirm_password' => 'sometimes | min:6'
+        ]);
         $user->name = $req->name;
         $user->email = $req->email;
-        $user->password = Hash::make($req->password);
+        if ($req->password) {
+            $user->password = Hash::make($req->password);
+        }
         $user->user_role_id = $req->user_role;
         $user->save();
         return response()->json([
-            "message" => "User Added successfully",
+            "message" => $id ? "User Updated successfully" : "User Added successfully",
             "location" => "/team"
         ]);
     }
-    public function editUserForm($id)
-    {
-        $user = User::find($id)->pluck("email", "name", "user_role_id");
-        $user_roles = UserRole::pluck("name", "id");
-        return view('partials.add_user_modal')->with("user", $user)->with("user_roles", $user_roles);
-    }
+
     public function deleteUser($id)
     {
         $user = User::find($id);
         $user->delete();
-        return response()->json("user deleted");
+        return response()->json([
+            "message" => "User Role deleted successfully",
+            "location" => "/team"
+        ]);
     }
 
 

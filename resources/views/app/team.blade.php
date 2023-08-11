@@ -1,6 +1,8 @@
 @extends('layouts.master')
 @include('layouts.modals.modal-sm')
 @include('layouts.modals.modal-lg')
+@include('layouts.modals.modal-md')
+
 
 @push('style')
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.css" />
@@ -16,7 +18,7 @@
                 data-feed="http://localhost/get_user_role_modal">Add
                 Role</button>
 
-            <button type="button" class="btn btn-success mr-1 mb-1" data-toggle="modal-feed" data-target="#modal_sm"
+            <button type="button" class="btn btn-success mr-1 mb-1" data-toggle="delete-feed" data-target="#modal_sm"
                 data-feed="http://localhost/get_user_role">Add User</button>
 
             <button type="button" class="btn btn-dark mr-1 mb-1" data-toggle="modal-feed" data-target="#modal_lg"

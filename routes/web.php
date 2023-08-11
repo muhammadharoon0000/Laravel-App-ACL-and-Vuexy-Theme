@@ -39,9 +39,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/get_user_role_modal', [TeamController::class, 'getUserRoleModal']);
 
     Route::get('/add_user_modal', [TeamController::class, 'addUserModal']);
-    Route::post('/add_user', [TeamController::class, 'addUser']);
+    Route::post('/store_or_update_user/{id?}', [TeamController::class, 'storeOrUpdateUser']);
 
-    Route::get('/edit_user_form/{id}', [TeamController::class, 'editUserForm']);
+    Route::get('/edit_user_modal/{id}', [TeamController::class, 'editUserModal']);
 
     Route::get('/get_permissions', [TeamController::class, 'getPermissions']);
     Route::post('/assign_permissions', [TeamController::class, 'assignPermissions']);
@@ -75,7 +75,4 @@ Route::get('/test', function () {
     // $roles = UserRole::whereIn('name', $roleNames)->pluck("id");
     // return $roles[0];
     // return Auth::user()->user_role->permissions()->pluck("name", "id");
-
-
-
 });

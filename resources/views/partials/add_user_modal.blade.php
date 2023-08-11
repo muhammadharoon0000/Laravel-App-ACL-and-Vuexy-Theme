@@ -3,11 +3,13 @@
         <div class="col-12">
             <div class="">
                 <div class="p-1 m-1">
-                    <h4 class="card-title">Add User</h4>
+                    <h4 class="card-title">{{ $title }}</h4>
                 </div>
                 <div class="card-content">
                     <div class="card-body">
-                        <form action="http://localhost/add_user" method="POST" class="form form-vertical">
+                        <form
+                            action="http://localhost/store_or_update_user{{ isset($user->id) ? '/' . $user->id : null }}"
+                            method="POST" class="form form-vertical">
                             @csrf
                             <div class="form-body">
                                 <div class="row">
@@ -15,14 +17,14 @@
                                         <div class="form-group">
                                             <label for="first-name-vertical"> Name</label>
                                             <input type="text" id="name" class="form-control" name="name"
-                                                placeholder="Name">
+                                                placeholder="Name" value="{{ @$user->name }}">
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="form-group">
                                             <label for="email-id-vertical">Email</label>
                                             <input type="email" id="email" class="form-control" name="email"
-                                                placeholder="Email">
+                                                placeholder="Email" value="{{ @$user->email }}">
                                         </div>
                                     </div>
                                     <div class="col-12">
@@ -44,9 +46,10 @@
                                             Select Role
                                         </div>
                                         <fieldset class="form-group">
-                                            <select class="form-control" id="selected_role" name="user_role">
+                                            <select class="form-control" name="user_role">
                                                 @foreach ($user_roles as $id => $user_role)
-                                                    <option value="{{ $id }}">
+                                                    <option value="{{ $id }}"
+                                                        {{ @$user->user_role_id ? ($id == $user->user_role_id ? 'selected' : '') : '' }}>
                                                         {{ $user_role }}
                                                     </option>
                                                 @endforeach
@@ -54,9 +57,7 @@
                                         </fieldset>
                                     </div>
                                     <div class="col-12">
-                                        <button type="submit" class="btn btn-primary mr-1 mb-1" id="add_user">Add
-                                            User</button>
-                                        <button type="reset" class="btn btn-outline-warning mr-1 mb-1">Reset</button>
+                                        <button type="submit" class="btn btn-primary mr-1 mb-1">Submit</button>
                                     </div>
                                 </div>
                             </div>
