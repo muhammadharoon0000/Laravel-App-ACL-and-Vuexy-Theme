@@ -1,22 +1,14 @@
 @extends('layouts.master')
-@include('layouts.modal')
 @include('layouts.modals.modal-sm')
+@include('layouts.modals.modal-lg')
 
 @push('style')
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.0/css/toastr.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.9/sweetalert2.min.css">
 @endpush
 
 @section('content')
-    {{-- <div class="modal fade text-left" data-backdrop="static" id="modal_sm" tabindex="-1" role="dialog"
-        aria-labelledby="modal_title" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
-            <div class="modal-content">
-
-            </div>
-        </div>
-    </div> --}}
-
-
     <div class="row">
         <div class="col-3">
 
@@ -27,7 +19,7 @@
             <button type="button" class="btn btn-success mr-1 mb-1" data-toggle="modal-feed" data-target="#modal_sm"
                 data-feed="http://localhost/get_user_role">Add User</button>
 
-            <button type="button" class="btn btn-dark mr-1 mb-1" data-toggle="modal-feed" data-target="#modal_sm"
+            <button type="button" class="btn btn-dark mr-1 mb-1" data-toggle="modal-feed" data-target="#modal_lg"
                 data-feed="http://localhost/get_permissions">Assign Permissions</button>
 
         </div>
@@ -68,23 +60,13 @@
                     </tbody>
                 </table>
             </div>
-
-
         </div>
     </div>
 @endsection
 
 @push('script')
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <script>
-        if (session('message')) {
-            Swal.fire(
-                'Good job!',
-                {{ $message ?? '' }},
-                'success'
-            )
-        }
-    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.0/js/toastr.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
     <script src="{{ asset('app-assets/js/custom.js') }}"></script>
     <script src="{{ asset('app-assets/js/otifcdn.js') }}"></script>

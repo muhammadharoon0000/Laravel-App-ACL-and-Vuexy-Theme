@@ -44,13 +44,16 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/edit_user_form/{id}', [TeamController::class, 'editUserForm']);
 
     Route::get('/get_permissions', [TeamController::class, 'getPermissions']);
+    Route::post('/assign_permissions', [TeamController::class, 'assignPermissions']);
 
     Route::get('/get_all_users', [TeamController::class, 'getAllUsers']);
+
     Route::get('/delete_user/{id}', [TeamController::class, 'deleteUser']);
     Route::get('/delete_user_role/{id}', [TeamController::class, 'deleteUserRole']);
+
     Route::get('/get_all_user_roles', [TeamController::class, 'getAllUserRoles']);
 
-
+    Route::get('/edit_user_role/{id}', [TeamController::class, 'editUserRole']);
     // Route::post('/edit_user/{id}', [TeamController::class, 'editUser']);
 });
 

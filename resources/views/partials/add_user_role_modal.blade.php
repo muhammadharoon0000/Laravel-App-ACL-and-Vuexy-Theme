@@ -7,25 +7,22 @@
                 </div>
                 <div class="card-content">
                     <div class="card-body">
-                        <form id="add_role_form" class="form form-vertical">
-                            <meta name="csrf-token" content="{{ csrf_token() }}">
+                        <form action="http://localhost/store_user_role" method="POST" class="form form-vertical">
+                            @csrf
                             <div class="form-body">
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="form-group">
                                             <label for="first-name-vertical">Name</label>
-                                            <input type="text" id="add_role_name" class="form-control"
-                                                name="fname">
+                                            <input value="{{ $user_role ?? '' ? $user_role['name'] : '' }}"
+                                                type="text" id="add_role_name" class="form-control" name="name">
                                         </div>
                                     </div>
 
 
                                     <div class="col-12">
                                         <button button[type='submit']
-                                            class="btn btn-xs btn-icon btn-outline-primary waves-effect waves-light"
-                                            data-toggle="post-feed" data-title="Are you sure?"
-                                            data-feed="http://localhost/store_user_role">Add
-                                            Role</button>
+                                            class="btn btn-xs btn-icon btn-outline-primary waves-effect waves-light">{{ $title }}</button>
                                     </div>
                                 </div>
                             </div>

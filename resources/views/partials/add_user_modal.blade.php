@@ -2,33 +2,33 @@
     <div class="row match-height">
         <div class="col-12">
             <div class="">
-                <div class="">
+                <div class="p-1 m-1">
                     <h4 class="card-title">Add User</h4>
                 </div>
                 <div class="card-content">
                     <div class="card-body">
-                        <form class="form form-vertical">
-                            <meta name="csrf-token" content="{{ csrf_token() }}">
+                        <form action="http://localhost/add_user" method="POST" class="form form-vertical">
+                            @csrf
                             <div class="form-body">
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="form-group">
                                             <label for="first-name-vertical"> Name</label>
-                                            <input type="text" id="name" class="form-control" name="fname"
-                                                placeholder="First Name">
+                                            <input type="text" id="name" class="form-control" name="name"
+                                                placeholder="Name">
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="form-group">
                                             <label for="email-id-vertical">Email</label>
-                                            <input type="email" id="email" class="form-control" name="email-id"
+                                            <input type="email" id="email" class="form-control" name="email"
                                                 placeholder="Email">
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="form-group">
                                             <label for="password-vertical">Password</label>
-                                            <input type="password" id="password" class="form-control" name="contact"
+                                            <input type="password" id="password" class="form-control" name="password"
                                                 placeholder="Password">
                                         </div>
                                     </div>
