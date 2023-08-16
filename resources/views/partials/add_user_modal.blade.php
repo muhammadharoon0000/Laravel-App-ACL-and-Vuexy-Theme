@@ -19,7 +19,7 @@
                                             <input type="text" id="name" class="form-control" name="name"
                                                 placeholder="Name" value="{{ @$user->name }}">
                                         </div>
-                                    </div>
+                                    </div> 
                                     <div class="col-12">
                                         <div class="form-group">
                                             <label for="email-id-vertical">Email</label>

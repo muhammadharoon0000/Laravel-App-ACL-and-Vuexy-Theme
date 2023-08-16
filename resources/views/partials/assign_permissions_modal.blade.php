@@ -10,12 +10,14 @@
                 <div class="col-12">
                     <div class="card-content">
                         <div class="card-body">
+                            <input type="hidden" name="id" value="{{ $id }}">
                             <ul id="permissions_ul" class="list-unstyled mb-0 d-flex flex-column">
                                 @foreach ($permissions as $id => $permission)
                                     <li class="d-inline-block mr-2 m-1">
                                         <fieldset>
                                             <label>
-                                                <input type="checkbox"
+                                                <input name="permissions[]" type="checkbox"
+                                                    {{ @$assigned_permissions[$id] ? 'checked' : '' }}
                                                     value={{ $id }}><b>{{ $permission }}</b>
                                             </label>
                                         </fieldset>

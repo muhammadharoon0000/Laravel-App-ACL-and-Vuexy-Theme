@@ -8,10 +8,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use OTIFSolutions\ACLMenu\Models\Permission;
+use OTIFSolutions\ACLMenu\Models\Team;
 use OTIFSolutions\ACLMenu\Models\UserRole;
 
 class TeamController extends Controller
 {
+
     public function getUserRoleModal()
     {
         return view('partials.add_user_role_modal')->with(['title' => "Add Role"]);
@@ -27,6 +29,7 @@ class TeamController extends Controller
     {
         $user_role = new UserRole;
         $user_role->name = strtoupper($req['name']);
+        $user_role->team_id = Auth::user()->id;
         $user_role->save();
         return response()->json([
             "message" => "User Role successfully Added",
@@ -69,13 +72,12 @@ class TeamController extends Controller
     }
     public function storeOrUpdateUser(Request $req, $id = null)
     {
-
         $user = $id ? User::find($id) : new User;
         if (!$req->password) {
             unset($req['password']);
             unset($req['confirm_password']);
         }
-        $validated = $req->validate([
+        $req->validate([
             'name' => 'required | max:255',
             'email' => 'required|email|unique:users,email,' . $user->id,
             'user_role' => 'required',
@@ -88,7 +90,12 @@ class TeamController extends Controller
             $user->password = Hash::make($req->password);
         }
         $user->user_role_id = $req->user_role;
+        $user->team_id = 2;
         $user->save();
+
+        Team::updateOrCreate([
+            'user_id' => $user->id
+        ]);
         return response()->json([
             "message" => $id ? "User Updated successfully" : "User Added successfully",
             "location" => "/team"
@@ -99,30 +106,41 @@ class TeamController extends Controller
     {
 
         $user = User::find($id);
-        if($user){
+        if ($user) {
             $user->delete();
             return response()->json([
                 "message" => "User deleted successfully",
                 "location" => "/team"
             ]);
         }
-        
+
     }
-
-
 
     public function getAllUsers()
     {
         $users = User::where('user_role_id', '!=', "1")->get();
         return response()->json(['data' => $users]);
     }
-    public function getPermissions()
+    public function getPermissions($id)
     {
         $permissions = Auth::user()->user_role->permissions()->pluck("name", "id");
-        return view('partials.assign_permissions_modal')->with('permissions', $permissions);
+        $assigned_permissions = UserRole::find($id)->permissions()->pluck("id");
+        return view('partials.assign_permissions_modal')->with([
+            'permissions' => $permissions,
+            "assigned_permissions" => $assigned_permissions,
+            "id" => $id
+        ]);
     }
-    public function assignPermissions()
+    public function assignPermissions(Request $req)
     {
+        $userRole = UserRole::find($req->id);
+        $userRole->permissions()->sync($req['permissions']);
+        $userRole->menu_items()->sync($req['permissions']);
+        return response()->json([
+            "message" => "Roles assigned successfully",
+            "location" => "/team"
+        ]);
+        
     }
 
     public function getAllUserRoles()

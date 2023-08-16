@@ -21,6 +21,12 @@ use OTIFSolutions\ACLMenu\Models\UserRole;
 */
 
 Route::middleware(['auth'])->group(function () {
+
+    // Route::get('/home', function () {
+    //     if (!Auth::user()->hasPermission('READ', '/dashboard'))
+    //         return 'error';
+    //     return view('layouts.home');
+    // });
     Route::get('/home', function () {
         return view('layouts.home');
     });
@@ -43,7 +49,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/edit_user_modal/{id}', [TeamController::class, 'editUserModal']);
 
-    Route::get('/get_permissions', [TeamController::class, 'getPermissions']);
+    Route::get('/get_permissions/{id}', [TeamController::class, 'getPermissions']);
     Route::post('/assign_permissions', [TeamController::class, 'assignPermissions']);
 
     Route::get('/get_all_users', [TeamController::class, 'getAllUsers']);
@@ -75,5 +81,8 @@ Route::get('/test', function () {
     // $roles = UserRole::whereIn('name', $roleNames)->pluck("id");
     // return $roles[0];
     // return Auth::user()->user_role->permissions()->pluck("name", "id");
-    return "Test";
+    // return Auth::user()->id;
+    $assigned_permissions = UserRole::find(1)->menu_items()->first();
+    dd($assigned_permissions->permissions);
+    return $assigned_permissions;
 });

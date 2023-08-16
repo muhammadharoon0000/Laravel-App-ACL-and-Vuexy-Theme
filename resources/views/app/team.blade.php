@@ -19,10 +19,7 @@
                 Role</button>
 
             <button type="button" class="btn btn-success mr-1 mb-1" data-toggle="modal-feed" data-target="#modal_sm"
-                data-feed="http://localhost/get_user_role">Add User</button>
-
-            <button type="button" class="btn btn-dark mr-1 mb-1" data-toggle="modal-feed" data-target="#modal_lg"
-                data-feed="http://localhost/get_permissions">Assign Permissions</button>
+                data-feed="http://localhost/get_user_role">Add User</button> 
 
         </div>
         <div class="col-9 h-100">
