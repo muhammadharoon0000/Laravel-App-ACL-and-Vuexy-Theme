@@ -343,6 +343,9 @@
                         url: n,
                         type: "DELETE",
                         data: {},
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
                         error: function (t) {
                             t = $.parseJSON(t.responseText), $.each(t, function (t, e) {
                                 $.isPlainObject(e) && $.each(e, function (t, e) {

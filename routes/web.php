@@ -48,8 +48,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/get_all_users', [TeamController::class, 'getAllUsers']);
 
-    Route::get('/delete_user/{id}', [TeamController::class, 'deleteUser']);
-    Route::get('/delete_user_role/{id}', [TeamController::class, 'deleteUserRole']);
+    Route::delete('/delete_user/{id}', [TeamController::class, 'deleteUser']);
+    Route::delete('/delete_user_role/{id}', [TeamController::class, 'deleteUserRole']);
 
     Route::get('/get_all_user_roles', [TeamController::class, 'getAllUserRoles']);
 

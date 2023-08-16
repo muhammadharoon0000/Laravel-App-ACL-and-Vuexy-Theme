@@ -95,14 +95,18 @@ class TeamController extends Controller
         ]);
     }
 
-    public function deleteUser($id)
+    public function deleteUser(Request $req, $id)
     {
+
         $user = User::find($id);
-        $user->delete();
-        return response()->json([
-            "message" => "User Role deleted successfully",
-            "location" => "/team"
-        ]);
+        if($user){
+            $user->delete();
+            return response()->json([
+                "message" => "User deleted successfully",
+                "location" => "/team"
+            ]);
+        }
+        
     }
 
 
