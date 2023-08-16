@@ -38,7 +38,7 @@ class MenuItemsTableSeeder extends Seeder
             ]
         )
             ->user_roles()
-            ->sync($roles[1]);
+            ->sync($roles[0], $roles[1]);
         MenuItem::updateOrCreate(
             ['id' => 3],
             [
