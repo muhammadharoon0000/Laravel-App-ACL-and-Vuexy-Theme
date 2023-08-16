@@ -75,4 +75,5 @@ Route::get('/test', function () {
     // $roles = UserRole::whereIn('name', $roleNames)->pluck("id");
     // return $roles[0];
     // return Auth::user()->user_role->permissions()->pluck("name", "id");
+    return "Test";
 });
