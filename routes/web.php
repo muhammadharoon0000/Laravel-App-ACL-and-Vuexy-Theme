@@ -62,7 +62,15 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/get_all_user_roles', [TeamController::class, 'getAllUserRoles']);
 
     Route::get('/edit_user_role/{id}', [TeamController::class, 'editUserRole']);
-    // Route::post('/edit_user/{id}', [TeamController::class, 'editUser']);
+
+
+    Route::get('/chat', function(){
+        return view('app.chat');
+    });
+
+    Route::get('/calender', function(){
+        return view('app.calender');
+    });
 });
 
 

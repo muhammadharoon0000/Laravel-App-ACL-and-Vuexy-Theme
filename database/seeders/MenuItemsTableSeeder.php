@@ -52,5 +52,33 @@ class MenuItemsTableSeeder extends Seeder
         )
             ->user_roles()
             ->sync([$roles[0], $roles[1]]);
+
+        MenuItem::updateOrCreate(
+            ['id' => 4],
+            [
+                'order_number' => 4,
+                'parent_id' => 0,
+                'icon' => 'feather icon-message-square',
+                'name' => 'Chat',
+                'route' => '/chat',
+                'generate_permission' => 'ALL'
+            ]
+        )
+            ->user_roles()
+            ->sync($roles[0]);
+
+        MenuItem::updateOrCreate(
+            ['id' => 5],
+            [
+                'order_number' => 5,
+                'parent_id' => 0,
+                'icon' => 'feather icon-calendar',
+                'name' => 'Calender',
+                'route' => '/calender',
+                'generate_permission' => 'ALL'
+            ]
+        )
+            ->user_roles()
+            ->sync($roles[0]);
     }
 }
