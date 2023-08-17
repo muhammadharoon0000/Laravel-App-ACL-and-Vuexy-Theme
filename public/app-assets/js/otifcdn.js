@@ -167,9 +167,15 @@
                 data: "",
                 processData: !1,
                 success: function (e) {
-                    $(t + " .modal-content").html(e), $(t).modal("show");
+                    if(e.error == true){
+                        toastr.error(e.message);
+                    }
+                    else{
+                        $(t + " .modal-content").html(e), $(t).modal("show");
+                    }
                 },
                 error: function (e) {
+                    console.log(e);
                     e = $.parseJSON(e.responseText), $.each(e, function (e, t) {
                         $.isPlainObject(t) && $.each(t, function (e, t) {
                             toastr ? toastr.error(t, "Error") : console.log(t);

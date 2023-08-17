@@ -18,11 +18,15 @@ class TeamController extends Controller
     {
         if (!Auth::user()->hasPermission('CREATE', 'team')){
             return response()->json([
+                'error'=> true,
                 "message" => "You are not allowed",
                 "location" => "/team"
             ]);
         }
-        return view('partials.add_user_role_modal')->with(['title' => "Add Role"]);
+        else{
+            return view('partials.add_user_role_modal')->with(['title' => "Add Role"]);
+        }
+        
     }
     public function editUserRole($id)
     {

@@ -41,36 +41,37 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/team', function () {
         return view('app.team');
     })->middleware('role:team');
-    Route::post('/store_user_role', [TeamController::class, 'storeUserRole']);
-    Route::get('/get_user_role', [TeamController::class, 'getUserRole']);
+
+    Route::post('/store_user_role', [TeamController::class, 'storeUserRole'])->middleware('role:team');
+    Route::get('/get_user_role', [TeamController::class, 'getUserRole'])->middleware('role:team');
 
     Route::get('/get_user_role_modal', [TeamController::class, 'getUserRoleModal'])->middleware('role:team');
 
-    Route::get('/add_user_modal', [TeamController::class, 'addUserModal']);
-    Route::post('/store_or_update_user/{id?}', [TeamController::class, 'storeOrUpdateUser']);
+    Route::get('/add_user_modal', [TeamController::class, 'addUserModal'])->middleware('role:team');
+    Route::post('/store_or_update_user/{id?}', [TeamController::class, 'storeOrUpdateUser'])->middleware('role:team');
 
-    Route::get('/edit_user_modal/{id}', [TeamController::class, 'editUserModal']);
+    Route::get('/edit_user_modal/{id}', [TeamController::class, 'editUserModal'])->middleware('role:team');
 
-    Route::get('/get_permissions/{id}', [TeamController::class, 'getPermissions']);
-    Route::post('/assign_permissions', [TeamController::class, 'assignPermissions']);
+    Route::get('/get_permissions/{id}', [TeamController::class, 'getPermissions'])->middleware('role:team');
+    Route::post('/assign_permissions', [TeamController::class, 'assignPermissions'])->middleware('role:team');
 
-    Route::get('/get_all_users', [TeamController::class, 'getAllUsers']);
+    Route::get('/get_all_users', [TeamController::class, 'getAllUsers'])->middleware('role:team');
 
-    Route::delete('/delete_user/{id}', [TeamController::class, 'deleteUser']);
-    Route::delete('/delete_user_role/{id}', [TeamController::class, 'deleteUserRole']);
+    Route::delete('/delete_user/{id}', [TeamController::class, 'deleteUser'])->middleware('role:team');
+    Route::delete('/delete_user_role/{id}', [TeamController::class, 'deleteUserRole'])->middleware('role:team');
 
-    Route::get('/get_all_user_roles', [TeamController::class, 'getAllUserRoles']);
+    Route::get('/get_all_user_roles', [TeamController::class, 'getAllUserRoles'])->middleware('role:team');
 
-    Route::get('/edit_user_role/{id}', [TeamController::class, 'editUserRole']);
+    Route::get('/edit_user_role/{id}', [TeamController::class, 'editUserRole'])->middleware('role:team');
 
 
-    Route::get('/chat', function(){
+    Route::get('/chat', function () {
         return view('app.chat');
-    });
+    })->middleware('role:chat');
 
-    Route::get('/calender', function(){
+    Route::get('/calender', function () {
         return view('app.calender');
-    });
+    })->middleware('role:calender');
 });
 
 
@@ -97,9 +98,14 @@ Route::get('/test', function () {
     // $currentPermission = "dashboard";
     // $permissions = Auth::user()->user_role->permissions()->where('name','LIKE','%'.$currentPermission)->get();
     // return $permissions;
-    if (!Auth::user()->hasPermission('READ', 'dashboard'))
-        return 'error';
-    return "success";
+    $menuItems = Auth::user()->user_role->permissions;
+    return $menuItems;
+    // foreach($menuItems as $menuItem){
+    //     echo $menuItem->name . '<br/>';
+    //     foreach($menuItem->permissions as $item){
+    //         echo $item->name. '<br/>';
+    //     }
+    // }
     // return in_array("id" == 1, $array, true);
     // return $menuItems[0]->permissions;
     // $menu_items = UserRole::find(1)->menu_items();
