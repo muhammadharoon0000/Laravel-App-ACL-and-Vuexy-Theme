@@ -82,7 +82,15 @@ Route::get('/test', function () {
     // return $roles[0];
     // return Auth::user()->user_role->permissions()->pluck("name", "id");
     // return Auth::user()->id;
-    $assigned_permissions = UserRole::find(1)->menu_items()->first();
-    dd($assigned_permissions->permissions);
-    return $assigned_permissions;
+
+    // return 
+    $permissions = UserRole::find(2)->permissions;
+    return $permissions;
+    // return in_array("id" == 1, $array, true);
+    // return $menuItems[0]->permissions;
+    // $menu_items = UserRole::find(1)->menu_items();
+    // $menuItems = UserRole::find(1)->menu_items;
+    // return $menuItems[0]->permissions;
 });
+
+// $assignedMenuItems = UserRole::find($id)->menu_items;

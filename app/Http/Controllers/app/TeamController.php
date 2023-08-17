@@ -97,7 +97,7 @@ class TeamController extends Controller
             'user_id' => $user->id
         ]);
         return response()->json([
-            "message" => $id ? "User Updated successfully" : "User Added successfully",
+            "message" => "User Save Successfully",
             "location" => "/team"
         ]);
     }
@@ -118,16 +118,18 @@ class TeamController extends Controller
 
     public function getAllUsers()
     {
-        $users = User::where('user_role_id', '!=', "1")->get();
-        return response()->json(['data' => $users]);
+        $adminUsers = User::where('user_role_id', '!=', "1")->get();
+        return response()->json(['data' => $adminUsers]);
     }
     public function getPermissions($id)
     {
-        $permissions = Auth::user()->user_role->permissions()->pluck("name", "id");
-        $assigned_permissions = UserRole::find($id)->permissions()->pluck("id");
+        $menuItems = Auth::user()->user_role->menu_items;
+        $assignedMenuItems = collect(UserRole::find($id)->menu_items);
+        $assignedPermissions = collect(UserRole::find($id)->permissions);
         return view('partials.assign_permissions_modal')->with([
-            'permissions' => $permissions,
-            "assigned_permissions" => $assigned_permissions,
+            'menuItems' => $menuItems,
+            "assignedMenuItems" => $assignedMenuItems,
+            "assignedPermissions" => $assignedPermissions,
             "id" => $id
         ]);
     }
@@ -135,17 +137,17 @@ class TeamController extends Controller
     {
         $userRole = UserRole::find($req->id);
         $userRole->permissions()->sync($req['permissions']);
-        $userRole->menu_items()->sync($req['permissions']);
+        $userRole->menu_items()->sync($req['menu_items']);
         return response()->json([
-            "message" => "Roles assigned successfully",
+            "message" => "Permission assigned successfully",
             "location" => "/team"
         ]);
-        
+
     }
 
     public function getAllUserRoles()
     {
-        $user_roles = UserRole::get();
+        $user_roles = UserRole::where('team_id', '!=', 'null')->get();
         return response()->json(['data' => $user_roles]);
     }
 }
