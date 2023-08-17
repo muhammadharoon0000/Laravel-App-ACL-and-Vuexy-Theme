@@ -84,8 +84,7 @@ Route::get('/test', function () {
     // return Auth::user()->id;
 
     // return 
-    $permissions = UserRole::find(2)->permissions;
-    return $permissions;
+    return Auth::user()->hasPermission('READ', '/dashboard') ? "true" : "false";
     // return in_array("id" == 1, $array, true);
     // return $menuItems[0]->permissions;
     // $menu_items = UserRole::find(1)->menu_items();
