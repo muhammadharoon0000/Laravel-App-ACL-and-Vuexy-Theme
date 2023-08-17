@@ -22,27 +22,29 @@ use OTIFSolutions\ACLMenu\Models\UserRole;
 
 Route::middleware(['auth'])->group(function () {
 
-    // Route::get('/home', function () {
-    //     if (!Auth::user()->hasPermission('READ', '/dashboard'))
-    //         return 'error';
-    //     return view('layouts.home');
-    // });
-    Route::get('/home', function () {
+    Route::get('/', function () {
         return view('layouts.home');
     });
+
     Route::get('/dashboard', function () {
+        if (!Auth::user()->hasPermission('READ', 'dashboard'))
+            return 'error';
         return view('layouts.home');
-    });
+    })->middleware('role:dashboard');
+
     Route::get('/to_do', function () {
+        if (!Auth::user()->hasPermission('READ', 'to_do'))
+            return 'error';
         return view('app.to_do');
-    });
+    })->middleware('role:to_do');
+
     Route::get('/team', function () {
         return view('app.team');
     });
     Route::post('/store_user_role', [TeamController::class, 'storeUserRole']);
     Route::get('/get_user_role', [TeamController::class, 'getUserRole']);
 
-    Route::get('/get_user_role_modal', [TeamController::class, 'getUserRoleModal']);
+    Route::get('/get_user_role_modal', [TeamController::class, 'getUserRoleModal'])->middleware('role:team');
 
     Route::get('/add_user_modal', [TeamController::class, 'addUserModal']);
     Route::post('/store_or_update_user/{id?}', [TeamController::class, 'storeOrUpdateUser']);
@@ -84,7 +86,12 @@ Route::get('/test', function () {
     // return Auth::user()->id;
 
     // return 
-    return Auth::user()->hasPermission('READ', '/dashboard') ? "true" : "false";
+    // $currentPermission = "dashboard";
+    // $permissions = Auth::user()->user_role->permissions()->where('name','LIKE','%'.$currentPermission)->get();
+    // return $permissions;
+    if (!Auth::user()->hasPermission('READ', 'dashboard'))
+        return 'error';
+    return "success";
     // return in_array("id" == 1, $array, true);
     // return $menuItems[0]->permissions;
     // $menu_items = UserRole::find(1)->menu_items();

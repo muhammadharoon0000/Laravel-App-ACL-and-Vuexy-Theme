@@ -16,6 +16,12 @@ class TeamController extends Controller
 
     public function getUserRoleModal()
     {
+        if (!Auth::user()->hasPermission('CREATE', 'team')){
+            return response()->json([
+                "message" => "You are not allowed",
+                "location" => "/team"
+            ]);
+        }
         return view('partials.add_user_role_modal')->with(['title' => "Add Role"]);
     }
     public function editUserRole($id)
