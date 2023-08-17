@@ -11,8 +11,6 @@
 @endpush
 
 
-
-
 @section('content')
     <div class="row">
         <div class="w-100">

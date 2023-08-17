@@ -40,7 +40,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/team', function () {
         return view('app.team');
-    });
+    })->middleware('role:team');
     Route::post('/store_user_role', [TeamController::class, 'storeUserRole']);
     Route::get('/get_user_role', [TeamController::class, 'getUserRole']);
 
