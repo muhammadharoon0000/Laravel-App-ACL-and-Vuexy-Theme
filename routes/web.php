@@ -52,7 +52,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/edit_user_modal/{id}', [TeamController::class, 'editUserModal'])->middleware('role:team');
 
-    Route::get('/get_permissions/{id}', [TeamController::class, 'getPermissions'])->middleware('role:team');
+    Route::get('/get_permissions/{id}', [TeamController::class, 'getPermissions']);
+    // ->middleware('role:team');
     Route::post('/assign_permissions', [TeamController::class, 'assignPermissions'])->middleware('role:team');
 
     Route::get('/get_all_users', [TeamController::class, 'getAllUsers'])->middleware('role:team');
@@ -85,6 +86,25 @@ Route::get('/logout', [AuthController::class, 'logout']);
 
 
 Route::get('/test', function () {
+
+
+    $menuItems = Auth::user()->user_role->menu_items;
+    $permissions = Auth::user()->user_role->permissions;
+    $assignedMenuItems = UserRole::find(2)->menu_items;
+    $assignedPermissions = UserRole::find(2)->permissions;
+    
+    foreach($menuItems as $menuItem){
+        echo $menuItem->name . '<br/>';
+        if($menuItem->user_roles->where('id', 2)->first()){
+            foreach ($menuItem->user_roles->where('id', 2)->first()['permissions'] as $item) {
+                echo $item->name . '<br/>';
+            }
+        }
+        
+    }
+    
+    
+    // ->where('id',2)->first()['permissions'];
     // $user = Auth::user();
     // return $user->user_role;
     // dd($user->user_role->name, $user['user_role']['name']);
@@ -98,8 +118,6 @@ Route::get('/test', function () {
     // $currentPermission = "dashboard";
     // $permissions = Auth::user()->user_role->permissions()->where('name','LIKE','%'.$currentPermission)->get();
     // return $permissions;
-    $menuItems = Auth::user()->user_role->permissions;
-    return $menuItems;
     // foreach($menuItems as $menuItem){
     //     echo $menuItem->name . '<br/>';
     //     foreach($menuItem->permissions as $item){

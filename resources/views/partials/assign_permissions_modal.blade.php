@@ -31,6 +31,7 @@
                                             </div>
                                         </fieldset>
                                     </li>
+
                                     @foreach ($menuItem->permissions as $item)
                                         <li class="d-inline-block mr-2">
                                             <fieldset>
