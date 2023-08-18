@@ -27,18 +27,29 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::get('/dashboard', function () {
-        if (!Auth::user()->hasPermission('READ', 'dashboard'))
-            return 'error';
+        if (!Auth::user()->hasPermission('READ', 'dashboard')) {
+            return response()->json([
+                'errors' => ['error' => ["You are not allowed"]],
+            ], 422);
+        }
         return view('layouts.home');
     })->middleware('role:dashboard');
 
     Route::get('/to_do', function () {
-        if (!Auth::user()->hasPermission('READ', 'to_do'))
-            return 'error';
+        if (!Auth::user()->hasPermission('READ', 'to_do')) {
+            return response()->json([
+                'errors' => ['error' => ["You are not allowed"]],
+            ], 422);
+        }
         return view('app.to_do');
     })->middleware('role:to_do');
 
     Route::get('/team', function () {
+        if (!Auth::user()->hasPermission('READ', 'team')) {
+            return response()->json([
+                'errors' => ['error' => ["You are not allowed"]],
+            ], 422);
+        }
         return view('app.team');
     })->middleware('role:team');
 
@@ -96,15 +107,6 @@ Route::get('/test', function () {
         foreach ($currentUserRole->permissions->where('menu_item_id', $menuItem->id) as $permission) {
             echo $permission;
         }
-        // ->where('menu_item_id', $menuItem->id)
-        // {{-- @foreach ($menuItem->user_roles->firstWhere('name', $currentUserRole->name)->permissions->where('menu_item_id', $menuItem->id) as $permissions) --}}
-        // foreach ($menuItem->user_roles->firstWhere('name', $currentUserRole->name)->permissions->where('menu_item_id', $menuItem->id) as $permissions) {
-        //     echo $permissions;
-        // }
-
-        // foreach ($menuItem->user_roles->firstWhere('name', $currentUserRole->name)->permissions as $role)
-        // $permissions = $role->menu_item_id == $menuItem->id ? $role : null;
-
     }
 
 

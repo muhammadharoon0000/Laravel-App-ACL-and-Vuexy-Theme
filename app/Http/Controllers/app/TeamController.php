@@ -132,11 +132,8 @@ class TeamController extends Controller
     {
         $menuItems = Auth::user()->user_role->menu_items;
         $currentUserRole = Auth::user()->user_role;
-        // $permissions = Auth::user()->user_role->permissions;
-
         $assignedMenuItems = UserRole::find($id)->menu_items;
         $assignedPermissions = UserRole::find($id)->permissions;
-
         return view('partials.assign_permissions_modal')->with([
             'menuItems' => $menuItems,
             'currentUserRole' => $currentUserRole,
