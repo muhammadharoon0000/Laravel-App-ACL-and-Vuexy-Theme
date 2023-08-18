@@ -23,7 +23,6 @@ class TeamController extends Controller
         } else {
             return view('partials.add_user_role_modal')->with(['title' => "Add Role"]);
         }
-
     }
     public function editUserRole($id)
     {
