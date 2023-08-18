@@ -22,7 +22,7 @@ use OTIFSolutions\ACLMenu\Models\UserRole;
 
 Route::middleware(['auth'])->group(function () {
 
-    Route::get('/', function () {
+    Route::get('/home', function () {
         return view('layouts.home');
     });
 
@@ -89,21 +89,24 @@ Route::get('/test', function () {
 
 
     $menuItems = Auth::user()->user_role->menu_items;
-    $permissions = Auth::user()->user_role->permissions;
-    $assignedMenuItems = UserRole::find(2)->menu_items;
-    $assignedPermissions = UserRole::find(2)->permissions;
-    
-    foreach($menuItems as $menuItem){
-        echo $menuItem->name . '<br/>';
-        if($menuItem->user_roles->where('id', 2)->first()){
-            foreach ($menuItem->user_roles->where('id', 2)->first()['permissions'] as $item) {
-                echo $item->name . '<br/>';
-            }
+    // $permissions = Auth::user()->user_role->permissions;
+    $currentUserRole = Auth::user()->user_role;
+
+    foreach ($menuItems as $menuItem) {
+        echo '<b>' . $menuItem->name . '</b>' . '<br/>';
+        // foreach($menuItem->permissions as $permission){
+        //     echo $permission;
+        // }
+        foreach ($menuItem->user_roles->firstWhere('name', $currentUserRole->name)->permissions->where('menu_item_id', $menuItem->id) as $permissions) {
+            echo $permissions;
         }
-        
+
+        // foreach ($menuItem->user_roles->firstWhere('name', $currentUserRole->name)->permissions as $role)
+        // $permissions = $role->menu_item_id == $menuItem->id ? $role : null;
+                                
     }
-    
-    
+
+
     // ->where('id',2)->first()['permissions'];
     // $user = Auth::user();
     // return $user->user_role;

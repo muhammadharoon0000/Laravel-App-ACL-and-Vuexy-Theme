@@ -31,24 +31,26 @@
                                             </div>
                                         </fieldset>
                                     </li>
-
-                                    @foreach ($menuItem->permissions as $item)
-                                        <li class="d-inline-block mr-2">
-                                            <fieldset>
-                                                <div class="vs-checkbox-con vs-checkbox-primary">
-                                                    <input
-                                                        {{ $assignedPermissions->firstWhere('id', $item->id) ? 'checked' : '' }}
-                                                        name="permissions[]" type="checkbox" value={{ $item->id }}>
-                                                    <span class="vs-checkbox">
-                                                        <span class="vs-checkbox--check">
-                                                            <i class="vs-icon feather icon-check"></i>
+                                    @foreach ($menuItem->user_roles->firstWhere('name', $currentUserRole->name)->permissions->where('menu_item_id', $menuItem->id) as $permissions)
+                                        @if ($permissions)
+                                            <li class="d-inline-block mr-2">
+                                                <fieldset>
+                                                    <div class="vs-checkbox-con vs-checkbox-primary">
+                                                        <input
+                                                            {{ $assignedPermissions->firstWhere('id', @$permissions->id) ? 'checked' : '' }}
+                                                            name="permissions[]" type="checkbox"
+                                                            value={{ isset($permissions->id) ? $permissions->id : '' }}>
+                                                        <span class="vs-checkbox">
+                                                            <span class="vs-checkbox--check">
+                                                                <i class="vs-icon feather icon-check"></i>
+                                                            </span>
                                                         </span>
-                                                    </span>
-                                                    <span class=""><b
-                                                            class="p-1">{{ $item->name }}</b></span>
-                                                </div>
-                                            </fieldset>
-                                        </li>
+                                                        <span class=""><b
+                                                                class="p-1">{{ isset($permissions->name) ? $permissions->name : '' }}</b></span>
+                                                    </div>
+                                                </fieldset>
+                                            </li>
+                                        @endif
                                     @endforeach
                                 @endforeach
                             </ul>

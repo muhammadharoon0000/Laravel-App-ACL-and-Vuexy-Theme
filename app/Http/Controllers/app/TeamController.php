@@ -16,15 +16,14 @@ class TeamController extends Controller
 
     public function getUserRoleModal()
     {
-        if (!Auth::user()->hasPermission('CREATE', 'team')){
+        if (!Auth::user()->hasPermission('CREATE', 'team')) {
             return response()->json([
-                'errors'=> ['error' => ["You are not allowed"]],
-            ],422);
-        }
-        else{
+                'errors' => ['error' => ["You are not allowed"]],
+            ], 422);
+        } else {
             return view('partials.add_user_role_modal')->with(['title' => "Add Role"]);
         }
-        
+
     }
     public function editUserRole($id)
     {
@@ -132,16 +131,17 @@ class TeamController extends Controller
     public function getPermissions($id)
     {
         $menuItems = Auth::user()->user_role->menu_items;
-        $permissions = Auth::user()->user_role->permissions;
-        
+        $currentUserRole = Auth::user()->user_role;
+        // $permissions = Auth::user()->user_role->permissions;
+
         $assignedMenuItems = UserRole::find($id)->menu_items;
         $assignedPermissions = UserRole::find($id)->permissions;
 
         return view('partials.assign_permissions_modal')->with([
             'menuItems' => $menuItems,
-            "permissions" => $permissions,
-            "assignedMenuItems" => $assignedMenuItems,
-            "assignedPermissions" => $assignedPermissions,
+            'currentUserRole' => $currentUserRole,
+            'assignedMenuItems' => $assignedMenuItems,
+            'assignedPermissions' => $assignedPermissions,
             "id" => $id,
         ]);
     }
