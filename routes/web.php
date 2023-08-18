@@ -52,8 +52,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/edit_user_modal/{id}', [TeamController::class, 'editUserModal'])->middleware('role:team');
 
-    Route::get('/get_permissions/{id}', [TeamController::class, 'getPermissions']);
-    // ->middleware('role:team');
+    Route::get('/get_permissions/{id}', [TeamController::class, 'getPermissions'])->middleware('role:team');
     Route::post('/assign_permissions', [TeamController::class, 'assignPermissions'])->middleware('role:team');
 
     Route::get('/get_all_users', [TeamController::class, 'getAllUsers'])->middleware('role:team');
@@ -76,7 +75,7 @@ Route::middleware(['auth'])->group(function () {
 });
 
 
-Route::get('/login', [AuthController::class, 'loginForm'])->name('login');
+Route::get('/', [AuthController::class, 'loginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 
 Route::get('/register', [AuthController::class, 'registrationForm']);
@@ -94,16 +93,18 @@ Route::get('/test', function () {
 
     foreach ($menuItems as $menuItem) {
         echo '<b>' . $menuItem->name . '</b>' . '<br/>';
-        // foreach($menuItem->permissions as $permission){
-        //     echo $permission;
-        // }
-        foreach ($menuItem->user_roles->firstWhere('name', $currentUserRole->name)->permissions->where('menu_item_id', $menuItem->id) as $permissions) {
-            echo $permissions;
+        foreach ($currentUserRole->permissions->where('menu_item_id', $menuItem->id) as $permission) {
+            echo $permission;
         }
+        // ->where('menu_item_id', $menuItem->id)
+        // {{-- @foreach ($menuItem->user_roles->firstWhere('name', $currentUserRole->name)->permissions->where('menu_item_id', $menuItem->id) as $permissions) --}}
+        // foreach ($menuItem->user_roles->firstWhere('name', $currentUserRole->name)->permissions->where('menu_item_id', $menuItem->id) as $permissions) {
+        //     echo $permissions;
+        // }
 
         // foreach ($menuItem->user_roles->firstWhere('name', $currentUserRole->name)->permissions as $role)
         // $permissions = $role->menu_item_id == $menuItem->id ? $role : null;
-                                
+
     }
 
 

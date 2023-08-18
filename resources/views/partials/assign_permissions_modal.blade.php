@@ -31,7 +31,7 @@
                                             </div>
                                         </fieldset>
                                     </li>
-                                    @foreach ($menuItem->user_roles->firstWhere('name', $currentUserRole->name)->permissions->where('menu_item_id', $menuItem->id) as $permissions)
+                                    @foreach ($currentUserRole->permissions->where('menu_item_id', $menuItem->id) as $permissions)
                                         @if ($permissions)
                                             <li class="d-inline-block mr-2">
                                                 <fieldset>
