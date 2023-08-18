@@ -133,6 +133,7 @@ class TeamController extends Controller
     {
         $menuItems = Auth::user()->user_role->menu_items;
         $permissions = Auth::user()->user_role->permissions;
+        
         $assignedMenuItems = UserRole::find($id)->menu_items;
         $assignedPermissions = UserRole::find($id)->permissions;
 
