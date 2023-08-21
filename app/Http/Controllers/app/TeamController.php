@@ -15,7 +15,6 @@ class TeamController extends Controller
 
     public function index()
     {
-        // $users = User::where('user_role_id', '!=', "1")->get();
         $users = UserRole::where('team_id', Auth::user()->team_id)->get()->flatMap(function ($userRole) {
             return $userRole->users;
         });
@@ -143,8 +142,8 @@ class TeamController extends Controller
     {
         $currentUserRole = Auth::user()->user_role;
         $menuItems = $currentUserRole->menu_items;
-        // $permissions = $currentUserRole->permissions;
         $userRole = UserRole::find($id);
+
         $assignedMenuItems = $userRole->menu_items;
         $assignedPermissions = $userRole->permissions;
 
