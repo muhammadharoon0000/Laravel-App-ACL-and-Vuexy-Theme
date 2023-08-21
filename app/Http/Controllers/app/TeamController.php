@@ -15,18 +15,17 @@ class TeamController extends Controller
 
     public function index()
     {
-        if(Auth::user()->hasPermission('READ', 'team')){
+        if (Auth::user()->hasPermission('READ', 'team')) {
             $users = UserRole::where('team_id', Auth::user()->team_id)->get()->flatMap(function ($userRole) {
                 return $userRole->users;
             });
             $currentUserTeam = Auth::user()->team_id;
-            $userRoles = UserRole::where('team_id',  $currentUserTeam)->get();
+            $userRoles = UserRole::where('team_id', $currentUserTeam)->get();
             return view('app.team')->with(["users" => $users, "userRoles" => $userRoles]);
-        }
-        else{
+        } else {
             return response()->json(['errors' => ['error' => ["You are not allowed"]]], 422);
         }
-        
+
     }
     public function getUserRoleModal()
     {
@@ -39,6 +38,9 @@ class TeamController extends Controller
     public function editUserRole($id)
     {
         $user_role = UserRole::find($id);
+        if (!Auth::user()->hasPermission('EDIT', 'team')) {
+            return response()->json(['errors' => ['error' => ["You are not allowed"]]], 422);
+        }
         if ($user_role) {
             return view('partials.add_user_role_modal')->with(['user_role' => $user_role, 'title' => "Update Role"]);
         }
@@ -56,6 +58,9 @@ class TeamController extends Controller
     }
     public function deleteUserRole($id)
     {
+        if (!Auth::user()->hasPermission('DELETE', 'team')) {
+            return response()->json(['errors' => ['error' => ["You are not allowed"]]], 422);
+        }
         $user_role = UserRole::find($id);
         if ($user_role) {
             $user_role->delete();
@@ -73,7 +78,7 @@ class TeamController extends Controller
     public function getUserRole()
     {
         $currentUserTeam = Auth::user()->team_id;
-        $user_roles = UserRole::where('team_id',  $currentUserTeam)->pluck("name", "id");
+        $user_roles = UserRole::where('team_id', $currentUserTeam)->pluck("name", "id");
         return view('partials.add_user_modal')->with([
             "title" => "Add User",
             "user_roles" => $user_roles
@@ -81,6 +86,9 @@ class TeamController extends Controller
     }
     public function editUserModal($id)
     {
+        if (!Auth::user()->hasPermission('UPDATE', 'team')) {
+            return response()->json(['errors' => ['error' => ["You are not allowed"]]], 422);
+        }
         $user = User::find($id);
         $user_roles = UserRole::pluck("name", "id");
         return view('partials.add_user_modal')->with([
@@ -91,6 +99,9 @@ class TeamController extends Controller
     }
     public function storeOrUpdateUser(Request $req, $id = null)
     {
+        if (!Auth::user()->hasPermission('UPDATE', 'team')) {
+            return response()->json(['errors' => ['error' => ["You are not allowed"]]], 422);
+        }
         $user = $id ? User::find($id) : new User;
         if (!$req->password) {
             unset($req['password']);
@@ -123,7 +134,9 @@ class TeamController extends Controller
 
     public function deleteUser(Request $req, $id)
     {
-
+        if (!Auth::user()->hasPermission('DELETE', 'team')) {
+            return response()->json(['errors' => ['error' => ["You are not allowed"]]], 422);
+        }
         $user = User::find($id);
         if ($user) {
             $user->delete();
@@ -160,6 +173,9 @@ class TeamController extends Controller
     }
     public function assignPermissions(Request $req)
     {
+        if (!Auth::user()->hasPermission('CREATE', 'team')) {
+            return response()->json(['errors' => ['error' => ["You are not allowed"]]], 422);
+        }
         $userRole = UserRole::find($req->id);
         $userRole->permissions()->sync($req['permissions']);
         $userRole->menu_items()->sync($req['menu_items']);
@@ -173,7 +189,7 @@ class TeamController extends Controller
     public function getAllUserRoles()
     {
         $currentUserTeam = Auth::user()->team_id;
-        $user_roles = UserRole::where('team_id',  $currentUserTeam)->get();
+        $user_roles = UserRole::where('team_id', $currentUserTeam)->get();
         return response()->json(['data' => $user_roles]);
     }
 }
