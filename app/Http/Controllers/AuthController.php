@@ -24,7 +24,7 @@ class AuthController extends Controller
         ]);
 
         $register_user = new User;
-        $register_user->user_role_id = 2;
+        $register_user->user_role_id = 3;
         $register_user->name = $req->name;
         $register_user->email = $req->email;
         $register_user->password = Hash::make($req->password);

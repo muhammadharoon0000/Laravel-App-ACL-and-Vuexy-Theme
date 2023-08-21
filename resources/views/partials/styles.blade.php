@@ -4,10 +4,6 @@
 
 <!--Vendor CSS-->
 <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/vendors.min.css') }}">
-{{-- <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/charts/apexcharts.css">
-<link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/extensions/tether-theme-arrows.css">
-<link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/extensions/tether.min.css">
-<link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/extensions/shepherd-theme-default.css"> --}}
 
 {{-- theme css --}}
 <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/bootstrap.css') }}">
@@ -20,10 +16,3 @@
 <!--Page CSS-->
 <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/core/menu/menu-types/vertical-menu.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/core/colors/palette-gradient.css') }}">
-{{-- <link rel="stylesheet" type="text/css" href="../../../app-assets/css/pages/dashboard-analytics.css">
-    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/pages/card-analytics.css">
-    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/plugins/tour/tour.css"> --}}
-
-<!-- Custom CSS-->
-{{-- <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/ss') }}"> --}}
-<!-- END: Custom CSS-->

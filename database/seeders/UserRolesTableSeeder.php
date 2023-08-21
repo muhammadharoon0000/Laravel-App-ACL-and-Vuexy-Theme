@@ -24,5 +24,11 @@ class UserRolesTableSeeder extends Seeder
                 'name' => 'CUSTOMER'
             ]
         );
+        UserRole::updateOrCreate(
+            ['id' => 3],
+            [
+                'name' => 'CLIENT'
+            ]
+        );
     }
 }
