@@ -15,9 +15,12 @@ class TeamController extends Controller
 
     public function index()
     {
-        $users = User::where('user_role_id', '!=', "1")->get();
-        $userRoles = UserRole::where('team_id', '!=', 'null')->get();
-        // return response()->json(['data' => $adminUsers]);
+        // $users = User::where('user_role_id', '!=', "1")->get();
+        $users = UserRole::where('team_id', Auth::user()->team_id)->get()->flatMap(function ($userRole) {
+            return $userRole->users;
+        });
+        $currentUserTeam = Auth::user()->team_id;
+        $userRoles = UserRole::where('team_id',  $currentUserTeam)->get();
         return view('app.team')->with(["users" => $users, "userRoles" => $userRoles]);
     }
     public function getUserRoleModal()
@@ -39,7 +42,7 @@ class TeamController extends Controller
     {
         $user_role = new UserRole;
         $user_role->name = strtoupper($req['name']);
-        $user_role->team_id = Auth::user()->id;
+        $user_role->team_id = Auth::user()->team_id;
         $user_role->save();
         return response()->json([
             "message" => "User Role successfully Added",
@@ -64,7 +67,9 @@ class TeamController extends Controller
     }
     public function getUserRole()
     {
-        $user_roles = UserRole::pluck("name", "id");
+        // $user_roles = UserRole::pluck("name", "id");
+        $currentUserTeam = Auth::user()->team_id;
+        $user_roles = UserRole::where('team_id',  $currentUserTeam)->pluck("name", "id");
         return view('partials.add_user_modal')->with([
             "title" => "Add User",
             "user_roles" => $user_roles
@@ -101,13 +106,10 @@ class TeamController extends Controller
         }
         $user->user_role_id = $req->user_role;
         $user->save();
+        $team = Team::updateOrCreate(['user_id' => $user->id]);
+        $user->team_id = $team['id'];
+        $user->save();
 
-        Team::updateOrCreate(['user_id' => $user->id]);
-        
-        User::updateOrCreate(
-            ['id' => $user->id],
-            ['team_id' => Team::where('user_id', $user->id)->first()->id]
-        );
 
         return response()->json([
             "message" => "User Save Successfully",
@@ -139,13 +141,12 @@ class TeamController extends Controller
 
     public function getPermissions($id)
     {
-        $menuItems = Auth::user()->user_role->menu_items;
         $currentUserRole = Auth::user()->user_role;
-
-        $permissions = Auth::user()->user_role->permissions;
-
-        $assignedMenuItems = UserRole::find($id)->menu_items;
-        $assignedPermissions = UserRole::find($id)->permissions;
+        $menuItems = $currentUserRole->menu_items;
+        // $permissions = $currentUserRole->permissions;
+        $userRole = UserRole::find($id);
+        $assignedMenuItems = $userRole->menu_items;
+        $assignedPermissions = $userRole->permissions;
 
 
         return view('partials.assign_permissions_modal')->with([
@@ -170,7 +171,8 @@ class TeamController extends Controller
 
     public function getAllUserRoles()
     {
-        $user_roles = UserRole::where('team_id', '!=', 'null')->get();
+        $currentUserTeam = Auth::user()->team_id;
+        $user_roles = UserRole::where('team_id',  $currentUserTeam)->get();
         return response()->json(['data' => $user_roles]);
     }
 }

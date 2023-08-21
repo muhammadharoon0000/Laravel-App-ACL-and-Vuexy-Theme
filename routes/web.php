@@ -90,15 +90,18 @@ Route::get('/logout', [AuthController::class, 'logout']);
 
 
 Route::get('/test', function () {
-
-    $user = User::find(15);
-    $team = Team::where('user_id', $user->id)->first();
-    if ($team) {
-        User::updateOrCreate(
-            ['id' => $user->id],
-            ['team_id' => $team->id]
-        );
+    $users = UserRole::where('team_id', Auth::user()->team_id)->get()->flatMap(function ($userRole) {
+        return $userRole->users;
+    });
+    foreach ($users as $user) {
+        echo '<h7>' . $user . '</h7>' . "</br>";
     }
+    // if ($team) {
+    //     User::updateOrCreate(
+    //         ['id' => $user->id],
+    //         ['team_id' => $team->id]
+    //     );
+    // }
     // ->where('id',2)->first()['permissions'];
     // $user = Auth::user();
     // return $user->user_role;

@@ -15,10 +15,11 @@
     <div class="row">
         <div class="w-100">
             <div class="float-right">
-                <button type="button" class="btn btn-primary mr-1 mb-1" data-toggle="modal-feed" data-target="#modal_sm"
-                    data-feed="http://localhost/get_user_role_modal">Add
-                    Role</button>
-
+                @if (Auth::user()->hasPermission('CREATE', 'team'))
+                    <button type="button" class="btn btn-primary mr-1 mb-1" data-toggle="modal-feed" data-target="#modal_sm"
+                        data-feed="http://localhost/get_user_role_modal">Add
+                        Role</button>
+                @endif
                 <button type="button" class="btn btn-success mr-1 mb-1" data-toggle="modal-feed" data-target="#modal_sm"
                     data-feed="http://localhost/get_user_role">Add User</button>
             </div>
@@ -55,7 +56,6 @@
                                                         <tr>
                                                             <th>Name</th>
                                                             <th>Email</th>
-                                                            <th>Team ID</th>
                                                             <th>Action</th>
                                                         </tr>
                                                     </thead>
@@ -66,20 +66,24 @@
                                                                 <tr>
                                                                     <td>{{ $user->name }}</td>
                                                                     <td>{{ $user->email }}</td>
-                                                                    <td>{{ $user->tean_id }}</td>
                                                                     <td>
                                                                         <div>
-                                                                            <button class="btn btn-primary m-1"
-                                                                                data-toggle="delete-feed"
-                                                                                data-feed="http://localhost/delete_user/{{ $user->id }}"
-                                                                                data-confirm-button-text="Yes, remove it!"
-                                                                                data-swal-cancel-text="The record has not been deleted."
-                                                                                data-swal-confirm-text="The record has been deleted."
-                                                                                data-swal-confirm-title="Deleted!">Delete</button>
-                                                                            <button class="btn btn-success m-1"
-                                                                                data-toggle="modal-feed"
-                                                                                data-target="#modal_md"
-                                                                                data-feed="http://localhost/edit_user_modal/{{ $user->id }}">Edit</button>
+                                                                            @if (Auth::user()->hasPermission('DELETE', 'team'))
+                                                                                <button class="btn btn-primary m-1"
+                                                                                    data-toggle="delete-feed"
+                                                                                    data-feed="http://localhost/delete_user/{{ $user->id }}"
+                                                                                    data-confirm-button-text="Yes, remove it!"
+                                                                                    data-swal-cancel-text="The record has not been deleted."
+                                                                                    data-swal-confirm-text="The record has been deleted."
+                                                                                    data-swal-confirm-title="Deleted!">Delete</button>
+                                                                            @endif
+                                                                            @if (Auth::user()->hasPermission('UPDATE', 'team'))
+                                                                                <button class="btn btn-success m-1"
+                                                                                    data-toggle="modal-feed"
+                                                                                    data-target="#modal_md"
+                                                                                    data-feed="http://localhost/edit_user_modal/{{ $user->id }}">Edit</button>
+                                                                            @endif
+
                                                                         </div>
                                                                     </td>
                                                                 </tr>
