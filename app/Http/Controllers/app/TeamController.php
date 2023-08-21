@@ -66,7 +66,6 @@ class TeamController extends Controller
     }
     public function getUserRole()
     {
-        // $user_roles = UserRole::pluck("name", "id");
         $currentUserTeam = Auth::user()->team_id;
         $user_roles = UserRole::where('team_id',  $currentUserTeam)->pluck("name", "id");
         return view('partials.add_user_modal')->with([
@@ -134,7 +133,6 @@ class TeamController extends Controller
     {
         $users = User::where('user_role_id', '!=', "1")->get();
         $userRoles = UserRole::where('team_id', '!=', 'null')->get();
-        // return response()->json(['data' => $adminUsers]);
         return view('app.team')->with(["users" => $users, "userRoles" => $userRoles]);
     }
 
@@ -146,8 +144,6 @@ class TeamController extends Controller
 
         $assignedMenuItems = $userRole->menu_items;
         $assignedPermissions = $userRole->permissions;
-
-
         return view('partials.assign_permissions_modal')->with([
             'menuItems' => $menuItems,
             'currentUserRole' => $currentUserRole,
