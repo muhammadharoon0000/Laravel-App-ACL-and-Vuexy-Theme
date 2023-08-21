@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use OTIFSolutions\ACLMenu\Models\Team;
 
 class AuthController extends Controller
 {
@@ -29,8 +30,11 @@ class AuthController extends Controller
         $register_user->email = $req->email;
         $register_user->password = Hash::make($req->password);
         $register_user->save();
+        $team = Team::updateOrCreate(['user_id' => $register_user->id]);
+        $register_user->team_id = $team['id'];
+        $register_user->save();
 
-        return redirect()->to(url('/login'));
+        return redirect()->to(url('/'));
     }
     public function loginForm()
     {
@@ -52,6 +56,6 @@ class AuthController extends Controller
     public function logout()
     {
         Auth::logout();
-        return redirect('/login');
+        return redirect('/');
     }
 }

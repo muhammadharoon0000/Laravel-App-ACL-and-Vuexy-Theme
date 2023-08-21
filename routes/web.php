@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\app\ProductController;
 use App\Http\Controllers\app\TeamController;
 use App\Http\Controllers\AuthController;
 use App\Models\User;
@@ -69,6 +70,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/edit_user_role/{id}', [TeamController::class, 'editUserRole'])->middleware('role:team');
 
+    Route::get('/product_list', [ProductController::class, 'index'])->middleware('role:product_list');
+
 
     Route::get('/chat', function () {
         return view('app.chat');
@@ -90,12 +93,7 @@ Route::get('/logout', [AuthController::class, 'logout']);
 
 
 Route::get('/test', function () {
-    $users = UserRole::where('team_id', Auth::user()->team_id)->get()->flatMap(function ($userRole) {
-        return $userRole->users;
-    });
-    foreach ($users as $user) {
-        echo '<h7>' . $user . '</h7>' . "</br>";
-    }
+    return Auth::user()->user_role->permissions;
     // if ($team) {
     //     User::updateOrCreate(
     //         ['id' => $user->id],

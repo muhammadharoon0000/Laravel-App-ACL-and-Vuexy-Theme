@@ -30,5 +30,6 @@ class UserRolesTableSeeder extends Seeder
                 'name' => 'CLIENT'
             ]
         );
+
     }
 }
