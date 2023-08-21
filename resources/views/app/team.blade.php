@@ -55,15 +55,41 @@
                                                         <tr>
                                                             <th>Name</th>
                                                             <th>Email</th>
+                                                            <th>Team ID</th>
                                                             <th>Action</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr>
+
+                                                        @if ($users)
+                                                            @foreach ($users as $user)
+                                                                <tr>
+                                                                    <td>{{ $user->name }}</td>
+                                                                    <td>{{ $user->email }}</td>
+                                                                    <td>{{ $user->tean_id }}</td>
+                                                                    <td>
+                                                                        <div>
+                                                                            <button class="btn btn-primary m-1"
+                                                                                data-toggle="delete-feed"
+                                                                                data-feed="http://localhost/delete_user/{{ $user->id }}"
+                                                                                data-confirm-button-text="Yes, remove it!"
+                                                                                data-swal-cancel-text="The record has not been deleted."
+                                                                                data-swal-confirm-text="The record has been deleted."
+                                                                                data-swal-confirm-title="Deleted!">Delete</button>
+                                                                            <button class="btn btn-success m-1"
+                                                                                data-toggle="modal-feed"
+                                                                                data-target="#modal_md"
+                                                                                data-feed="http://localhost/edit_user_modal/{{ $user->id }}">Edit</button>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            @endforeach
+                                                        @else
                                                             <td></td>
                                                             <td></td>
                                                             <td></td>
-                                                        </tr>
+                                                        @endif
+
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -83,10 +109,35 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
-                                                        <td></td>
-                                                        <td></td>
-                                                    </tr>
+
+                                                    @if ($userRoles)
+                                                        @foreach ($userRoles as $userRole)
+                                                            <tr>
+                                                                <td>{{ $userRole->name }}</td>
+                                                                <td>
+                                                                    <div>
+                                                                        <button type="button" class="btn btn-dark mb-1"
+                                                                            data-toggle="modal-feed" data-target="#modal_lg"
+                                                                            data-feed="http://localhost/get_permissions/{{ $userRole->id }}">Assign
+                                                                            Permissions</button>
+                                                                        <button class="btn btn-primary m-1"
+                                                                            data-toggle="delete-feed"
+                                                                            data-feed="http://localhost/delete_user_role/{{ $userRole->id }}"
+                                                                            data-confirm-button-text="Yes, remove it!"
+                                                                            data-swal-cancel-text="The record has not been deleted."
+                                                                            data-swal-confirm-text="The record has been deleted."
+                                                                            data-swal-confirm-title="Deleted!">Delete</button>
+                                                                        <button class="btn btn-success m-1"
+                                                                            data-toggle="modal-feed" data-target="#modal_sm"
+                                                                            data-feed="http://localhost/edit_user_role/{{ $userRole->id }}">Edit</button>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
+                                                    @else
+                                                        <td>No Data</td>
+                                                        <td>No Data</td>
+                                                    @endif
                                                 </tbody>
                                             </table>
                                         </div>

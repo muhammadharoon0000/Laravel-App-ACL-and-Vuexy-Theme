@@ -7,19 +7,23 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use OTIFSolutions\ACLMenu\Models\Permission;
 use OTIFSolutions\ACLMenu\Models\Team;
 use OTIFSolutions\ACLMenu\Models\UserRole;
 
 class TeamController extends Controller
 {
 
+    public function index()
+    {
+        $users = User::where('user_role_id', '!=', "1")->get();
+        $userRoles = UserRole::where('team_id', '!=', 'null')->get();
+        // return response()->json(['data' => $adminUsers]);
+        return view('app.team')->with(["users" => $users, "userRoles" => $userRoles]);
+    }
     public function getUserRoleModal()
     {
         if (!Auth::user()->hasPermission('CREATE', 'team')) {
-            return response()->json([
-                'errors' => ['error' => ["You are not allowed"]],
-            ], 422);
+            return response()->json(['errors' => ['error' => ["You are not allowed"]]], 422);
         } else {
             return view('partials.add_user_role_modal')->with(['title' => "Add Role"]);
         }
@@ -96,12 +100,15 @@ class TeamController extends Controller
             $user->password = Hash::make($req->password);
         }
         $user->user_role_id = $req->user_role;
-        $user->team_id = 2;
         $user->save();
 
-        Team::updateOrCreate([
-            'user_id' => $user->id
-        ]);
+        Team::updateOrCreate(['user_id' => $user->id]);
+        
+        User::updateOrCreate(
+            ['id' => $user->id],
+            ['team_id' => Team::where('user_id', $user->id)->first()->id]
+        );
+
         return response()->json([
             "message" => "User Save Successfully",
             "location" => "/team"
@@ -124,15 +131,23 @@ class TeamController extends Controller
 
     public function getAllUsers()
     {
-        $adminUsers = User::where('user_role_id', '!=', "1")->get();
-        return response()->json(['data' => $adminUsers]);
+        $users = User::where('user_role_id', '!=', "1")->get();
+        $userRoles = UserRole::where('team_id', '!=', 'null')->get();
+        // return response()->json(['data' => $adminUsers]);
+        return view('app.team')->with(["users" => $users, "userRoles" => $userRoles]);
     }
+
     public function getPermissions($id)
     {
         $menuItems = Auth::user()->user_role->menu_items;
         $currentUserRole = Auth::user()->user_role;
+
+        $permissions = Auth::user()->user_role->permissions;
+
         $assignedMenuItems = UserRole::find($id)->menu_items;
         $assignedPermissions = UserRole::find($id)->permissions;
+
+
         return view('partials.assign_permissions_modal')->with([
             'menuItems' => $menuItems,
             'currentUserRole' => $currentUserRole,

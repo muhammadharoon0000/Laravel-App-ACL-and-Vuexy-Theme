@@ -7,6 +7,7 @@ use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use OTIFSolutions\ACLMenu\Models\MenuItem;
+use OTIFSolutions\ACLMenu\Models\Team;
 use OTIFSolutions\ACLMenu\Models\UserRole;
 
 /*
@@ -44,14 +45,7 @@ Route::middleware(['auth'])->group(function () {
         return view('app.to_do');
     })->middleware('role:to_do');
 
-    Route::get('/team', function () {
-        if (!Auth::user()->hasPermission('READ', 'team')) {
-            return response()->json([
-                'errors' => ['error' => ["You are not allowed"]],
-            ], 422);
-        }
-        return view('app.team');
-    })->middleware('role:team');
+    Route::get('/team', [TeamController::class, 'index'])->middleware('role:team');
 
     Route::post('/store_user_role', [TeamController::class, 'storeUserRole'])->middleware('role:team');
     Route::get('/get_user_role', [TeamController::class, 'getUserRole'])->middleware('role:team');
@@ -97,19 +91,14 @@ Route::get('/logout', [AuthController::class, 'logout']);
 
 Route::get('/test', function () {
 
-
-    $menuItems = Auth::user()->user_role->menu_items;
-    // $permissions = Auth::user()->user_role->permissions;
-    $currentUserRole = Auth::user()->user_role;
-
-    foreach ($menuItems as $menuItem) {
-        echo '<b>' . $menuItem->name . '</b>' . '<br/>';
-        foreach ($currentUserRole->permissions->where('menu_item_id', $menuItem->id) as $permission) {
-            echo $permission;
-        }
+    $user = User::find(15);
+    $team = Team::where('user_id', $user->id)->first();
+    if ($team) {
+        User::updateOrCreate(
+            ['id' => $user->id],
+            ['team_id' => $team->id]
+        );
     }
-
-
     // ->where('id',2)->first()['permissions'];
     // $user = Auth::user();
     // return $user->user_role;
