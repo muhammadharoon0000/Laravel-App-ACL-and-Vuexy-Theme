@@ -20,8 +20,10 @@
                         data-feed="http://localhost/get_user_role_modal">Add
                         Role</button>
                 @endif
-                <button type="button" class="btn btn-success mr-1 mb-1" data-toggle="modal-feed" data-target="#modal_sm"
-                    data-feed="http://localhost/get_user_role">Add User</button>
+                @if (Auth::user()->hasPermission('CREATE', 'team'))
+                    <button type="button" class="btn btn-success mr-1 mb-1" data-toggle="modal-feed"
+                        data-target="#modal_sm" data-feed="http://localhost/get_user_role">Add User</button>
+                @endif
             </div>
         </div>
     </div>
@@ -124,16 +126,21 @@
                                                                             data-toggle="modal-feed" data-target="#modal_lg"
                                                                             data-feed="http://localhost/get_permissions/{{ $userRole->id }}">Assign
                                                                             Permissions</button>
-                                                                        <button class="btn btn-primary m-1"
-                                                                            data-toggle="delete-feed"
-                                                                            data-feed="http://localhost/delete_user_role/{{ $userRole->id }}"
-                                                                            data-confirm-button-text="Yes, remove it!"
-                                                                            data-swal-cancel-text="The record has not been deleted."
-                                                                            data-swal-confirm-text="The record has been deleted."
-                                                                            data-swal-confirm-title="Deleted!">Delete</button>
-                                                                        <button class="btn btn-success m-1"
-                                                                            data-toggle="modal-feed" data-target="#modal_sm"
-                                                                            data-feed="http://localhost/edit_user_role/{{ $userRole->id }}">Edit</button>
+                                                                        @if (Auth::user()->hasPermission('DELETE', 'team'))
+                                                                            <button class="btn btn-primary m-1"
+                                                                                data-toggle="delete-feed"
+                                                                                data-feed="http://localhost/delete_user_role/{{ $userRole->id }}"
+                                                                                data-confirm-button-text="Yes, remove it!"
+                                                                                data-swal-cancel-text="The record has not been deleted."
+                                                                                data-swal-confirm-text="The record has been deleted."
+                                                                                data-swal-confirm-title="Deleted!">Delete</button>
+                                                                        @endif
+                                                                        @if (Auth::user()->hasPermission('UPDATE', 'team'))
+                                                                            <button class="btn btn-success m-1"
+                                                                                data-toggle="modal-feed"
+                                                                                data-target="#modal_sm"
+                                                                                data-feed="http://localhost/edit_user_role/{{ $userRole->id }}">Edit</button>
+                                                                        @endif
                                                                     </div>
                                                                 </td>
                                                             </tr>

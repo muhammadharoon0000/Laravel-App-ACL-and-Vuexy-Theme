@@ -15,12 +15,18 @@ class TeamController extends Controller
 
     public function index()
     {
-        $users = UserRole::where('team_id', Auth::user()->team_id)->get()->flatMap(function ($userRole) {
-            return $userRole->users;
-        });
-        $currentUserTeam = Auth::user()->team_id;
-        $userRoles = UserRole::where('team_id',  $currentUserTeam)->get();
-        return view('app.team')->with(["users" => $users, "userRoles" => $userRoles]);
+        if(Auth::user()->hasPermission('READ', 'team')){
+            $users = UserRole::where('team_id', Auth::user()->team_id)->get()->flatMap(function ($userRole) {
+                return $userRole->users;
+            });
+            $currentUserTeam = Auth::user()->team_id;
+            $userRoles = UserRole::where('team_id',  $currentUserTeam)->get();
+            return view('app.team')->with(["users" => $users, "userRoles" => $userRoles]);
+        }
+        else{
+            return response()->json(['errors' => ['error' => ["You are not allowed"]]], 422);
+        }
+        
     }
     public function getUserRoleModal()
     {
