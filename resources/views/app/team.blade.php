@@ -1,7 +1,7 @@
 @extends('layouts.master')
-@include('layouts.modals.modal-sm')
+{{-- @include('layouts.modals.modal-sm')
 @include('layouts.modals.modal-lg')
-@include('layouts.modals.modal-md')
+@include('layouts.modals.modal-md') --}}
 
 
 @push('style')
